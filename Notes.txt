@@ -1,0 +1,190 @@
+Examples of AI:
+-Computer Vision
+-Speech Recognition
+-Game Solving Application
+-Natural Language processing
+
+-Style Transferring.
+-Speech Generation.
+-Natural Language Generation.
+
+------------------------------------
+Machine Learning
+-Machine learning is the practice of using algorithms to learn from data, and then make a determination or prediction.
+-Types:Supervised Learning, Unsupersived Learning and Reinforcement Learning. 
+
+Algorithms: Neural Networks: they are architectured based on the functioning of the human brain. In practice, the Neurons
+are in layers.
+
+-----------------------------------------
+Data Science
+-Data Scientist is the profile that is in charge of making data more useful, in the sense of understanding it's semantics
+and behavior.
+-Types of data driven tasks: Prediction, Classification and Optimization.
+-Step one: Problem Framing.
+-Step two: Data understanding/processing.
+-Step three: Algorithm selection, train, test.
+
+===============================================================================
+WHY AI NOW?
+The reason we are implementing AI now is that there have been certain breakthroughs that have made it feasible.
+-Big Data has made it hugely available. More business have been diving to it.
+-Cloud Computing Services are now accessible.
+-Specifically designed hardware has been built.
+-Software libraries have been published and tested.
+-IoT as a future AI enabler.
+
+-------------------------------------------
+Demystifying AI
+Andrew NG: Surprisingly, despite AI's breath of impact, the types of it being deployed are still extremely limited.
+Almost all of AI's recent progress is through one type, in which some input data (A) is used to quickly generate some
+simple response (B).
+Examples: Face Recognition. Prediction of loan score. Sales forecasting. Recommendation engines.
+
+Objectives of AI:
+-Improve access or processing of information.
+-Improve decision making.
+-Sub-Person Tailoring (person+context+history)
+
+A lot of noisy data doesn't make sense. Alexa, and other personal assistants combine speech recognition and speech
+generation capabilities with natural language understanding, to create a seamless interaction experience.
+
+--------------------------------------------
+Artificial Intelligence Projects
+What kind of team composes an AI team? 
+-Data Scientist: He selects the tools that are going to be used in the project.
+-Data Architect/Engineer: He sets up the infrastructure to collect, process, store and access the data.
+-UX Designer: He sets up the presentation layer for the AI project.
+
+Other roles:
+-Cloud Computing Expert: He controls the scaling of the project.
+-User touchpoint Expert: He develops the web/mobile application that makes the project.
+
+The project is built to discover. We then decide how the project is going to be delivered.
+
+Project Steps:
+Step One: Problem Definition.
+Step Two: Data Collection and Processing.
+Step Three: Feature and Architecture Engineering.
+Step Four: Model Training.
+Step Five: Model Testing, Evaluation and Validation.
+Step Six: Model Deployment and Monitoring.
+
+The project is hardly linear. There are several iterations and circlebacks.
+-------------------------------------------------
+What an AI project is not
+
+-Agile methodology is something desirable, but not so straight to do in AI projects.
+-Connecting an AI API is not doing AI. The same way that using a scalpel does not make you a surgeon.
+-You need to understand why and how things work in an AI API.
+-AI projects require constant interaction with stakeholders. You need to build trust with them, because results are not
+immediate. If you don't define the problem you will be in one! Also determine clearly who the stakeholders are.
+In short: the process is not chaotic unless we have an ill-defined problem or an ill-defined relationship with the client.
+-What makes an application intelligent, is not the connection with different apis, but the design of those connections.
+-Garbage in, garbage out.
+-----------------------------------------------------
+The AI toolset
+These are the applications that compose the
+-Cognitive Service: An array of API's that create a dataflow(i.e: Google Cloud Services, Azure)
+-Task specific API: Stand-alone API's that have a single purpose (i.e: Api.ai, LUIS)
+-High level helpers: These are not trained and you have to build them from scratch (i.e: Bonsai,)
+-DataTools: Help you implement neural networks.
+-Frameworks: Help you create neural networks.
+-Languages: Help you write AI APIs.
+
+-------------------------------------------------------
+AI Services vs from scratch developments
+-Do you have the skills to use either of them?
+-Do you want to leverage against the competition?
+-Do you have the budget?
+
+Rule of thumb: The higher in the hiererchy you go, the lower amount of work you have to do, but also the lower amount of
+control of the result you will have.
+So this is basically a consumption based rate vs a more flexible cost structure.
+
+High level tools=>Less time to market.
+Low level tools=>More control of the results and ownership of intellectual property.
+
+High level tools=>Already trained models for task-oriented but general domain tasks.
+Low level tools=>Domain specific tasks.
+
+High level tools=>Less privacy
+Low level tools=>Less reliability
+
+High level tools=>Fast POC. Similar to automated website development.
+
+Morale: At the beginning, don't reinvent the wheel. Later, you can do some rocket science.
+-----------------------------------------------------------
+Some algorithms
+
+What is the engine that drives AI? What kind of tools can you have? Tip: it's not black magic.
+There are two types of algorithms:
+-Classification algorithms: Naive Bayes(1), Support Vector Machines (2), K-Nearest Neighbourghs(3), Decision Trees(4)
+-Regression algorithms: Generalized Regression (1), Regression Tree (2), Time Series Methods (3)
+
+Select algorithms by objective. NN's can solve either classification or regression problems, but they are usually selected
+by their architecture. Different NN architectures can make them better for solving particular problems.
+
+Neural Network Types:
+-Deep Neural Network (DNN): Have lots of hidden layers. They recognize patterns in data.
+-Convulutional Neural Networks (CNN): Look for patterns, knowing that a particular pattern exists.
+-Recurrent Neural Networks (RNN): These networks look at the history to find values or patterns.
+-Generative Adversarial Networks (GAN): You are pairing two networks. One tries to classify real from fake data. The other
+tries to generate data that cannot be distinguished from real one. You feed the first with the last. Repeat until the last
+is good enough to qualify as intelligent.
+-Ensemble Learning: You have different algorithms working and voting together to solve a problem involving classification
+or regression. (Example: Random Forest).
+---------------------------------------------------------------
+Examples
+You should not use verticals. This is because:
+1-Crosspolination is the key source of innovation.
+2-State of the Art is not business defined, but focused on capabilities of the techniques.
+3-Creativity and innovation are "still our job", whether in tech or business.
+
+Types:
+-Recommendation Systems (i.e Netflix: 75% of people views what comes from the recommendation. Amazon also).
+-Chatboxes and assistants. (i.e Alexa: They use interactions with users to improve themselves).
+-Seamless experiences.
+-Process optimization algorithms (i.e Amazon Fresh)
+-Search prediction (i.e: Google Search)
+-Ad Placing
+
+Some fintech examples:
+-Fraud detection and prevention.
+-Stock Value Forecasting.
+-Valuation Modeling using sentiment analysis.
+-Topic extraction.
+
+Storage management
+-Counting items in a shelf or deposit.
+
+Revenue optimization
+-Prices are dynamically set using algorithms that estimate the best price for an item or service based on users and their
+context. The goal is to maximize sales or revenue.
+
+E-learning
+-Attrition Prediction: They can predict if a user is going to drop out from a course (hello Maxi). The system then tackles
+the behavior that makes the user leave.
+
+Healthcare
+-There are some initiatives that use both AI and IoT to improve the life quality of elder people. Algorithms are used to
+detect (and even predict!) the occurence of a home accident or a health breakdown, so doctors can be aware of the situation
+and react faster.
+-Using voice prosody and facial recognition, it is possible to determine the emotional state of a person. Having this
+knowledge can lead to the creation more adaptive and integrated digital journeys. These services not only fit the customer
+needs, but also how are they feeling at every moment.
+----------------------------------------------------------
+Closing thoughts
+AI is powerful enough that is going to impact the philosophy.
+-Biases: Non-desirable behavior (racism, sexism,xenophobia)
+-Regulation and policy: Who is responsible? When and who is going to regulate?
+-Creativity: Can computers "create" things or ideas?
+
+Who to follow?
+-Andrew Ng.
+-Yann Lecun.
+-Coursera and Udacity.
+------------------------------------------------------------
+Dark Side (of the Force!)
+The dangers of AI. Evolutionary danger: AI surpassing humans as a species. AI having different objectives than humans. Not
+having a worldview of what is going on around them.

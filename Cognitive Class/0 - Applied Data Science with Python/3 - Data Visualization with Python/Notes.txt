@@ -1,0 +1,445 @@
+DATA VISUALIZATION WITH PYTHON
+==============================
+This modules of this course are:
+
+1-INTRODUCTION TO VISUALIZATION TOOLS
+2-BASIC VISUALIZATION TOOLS
+3-SPECIALIZED VISUALIZATION TOOLS
+4-ADVANCED VISUALIZATION TOOLS
+5-CREATING MAPS AND VISUALIZING GEOSPATIAL DATA
+
+After taking this course, you will learn how to use different libraries, namely Matplotlib, Seaborn and Folium to create expressive visuals enabling you to showcase the data you have learned to process.
+
+More specifically, in this course you will learn about:
+*Data visualization and some of the best practices when creating plots and visuals.
+*The history and architecture of Matplotlib, and how to do basic plotting with Matplotlib.
+*Generating different visualization tools using Matplotlib such as line plots, area plots, histograms, bar charts, box plots, and pie charts.
+*Seaborn, another data visualization library in Python, and how to use it to create attractive statistical graphics.
+*Folium, and how to use to create maps and visualize geospatial data.
+
+-------------------------------------------------------------------------
+1-INTRODUCTION TO VISUALIZATION TOOLS
+
+Learning objectives:
+
+*Data visualization and some of the best practices to keep in mind when creating plots and visuals.
+*The history and the architecture of Matplotlib.
+*Basic plotting with Matplotlib.
+*The dataset on immigration to Canada, which will be used extensively throughout the course.
+*Generating line plots using Matplotlib.
+
+-------------------------------------------------------------------------
+Introduction to data visualization
+
+The main goal of this lesson is to transform a given visual into one that is more effective, attractive and impactful.
+Why build visuals?
+1-For exploratory data analysis.
+2-To communicate data clearly.
+3-Share unbiased representation of data.
+4-To support recommendations to different stakeholders.
+
+Check out Darkhorse Analytics to view some examples of best practices on data visualization. Their approach is this:
+1-Less is more effective.
+2-Less is more atractive.
+3-Less is more impactive.
+
+In other words, the visuals should support the message rather than distract from it.
+www.darkhorseanalytics.com
+
+-------------------------------------------------------------------------
+Introduction to Matplotlib
+
+We will focus on this lesson about the history of Matplotlib. Matplotlib is the most popular DV library for Python. Matplotlib was equipped with a scripting interface, so that it would be possible to generate graphics.
+This is represented by Pyplot.
+
+Matplotlib Architecture
+
+*Backend Layer(Figure Canvas, Renderer, Event)
+*Artist Layer(Artist)
+*Scripting Layer(Pyplot)
+
+Backend Layer: It has three built-in abstract interface classes:
+*Figure-Canvas: Encompasses the area onto which the figure is drawn.
+import matplotlib.backend_bases.FigureCanvas
+*Renderer: Knows how to draw on the FigureCanvas.
+import matplotlib.backend_bases.Renderer
+*Event: Handles user inputs such as keyboard strokes and mouse clicks.
+import matplotlib.backend_bases.Event
+
+Artist Layer: It has one main object.
+
+*Artist: Knows how to use the renderer to draw on the canvas. Title,lines, tick labels, and images, all correspond to individual Artist instances. There are two types of Artist objects:
+1-Primitive: Line2D, Rectangle, Circle and Text.
+2-Composite: Axis, Tick, Axes and Figure.
+
+The Figure element is the object that contains and manages all of the elements in a given graphic. The Axes is where most of the matplotlib API plotting methods are defined, including the methods to create and manipulate the ticks, the axis lines, the grid or the plot background.
+It is important to take note that each composite artist may contain other composite artists as well as primitive artists. So for example, a Figure Artist contains an Axes Artist as well Rectangle or Text Artists.
+In Python:
+
+#Here agg stands for "Anti Grain Geometry", a high performance library that produces attractive images.
+from matplotlib.backend_bases.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+
+fig= Figure()
+canvas = FigureCanvas(fig)
+
+import numpy as np
+x= np.random.randn(10000)
+
+#The 111 is a MATLAB convention so that it creates a grid with one row and one column.
+#Then uses the first cell in that grid for the location of the new axes.
+ax = fig.add_subplot(111)
+
+#Here the 100 means create 100 bins.
+ax.hist(x,100)
+
+#Add a title to the figure and save it
+ax.set_title(r'Normal distribution with $\mu=0, \sigma=1$')
+fig.savefig('matplotlib_histogram.png')
+
+Scripting Layers: It was made for scientists who are not necessarily code-savvy. Since the Artist Layer is syntactically heavy and is meant for developers and not for individuals whose goal is to perform quick exploratory analysis of some data. It has one interface:
+*Pyplot: It is a scripting language designed to simplify the processes defined in the Artist Layer.
+
+Let's see the histogram example in the scripting layer:
+
+import matplotlib.pyplot as plt
+import numpy as np
+
+x=np.random.randn(10000)
+plt.hist(x,100)
+plt.title(r'Normal distribution with $\mu=0, \sigma=1$')
+plt.savefig('pyplot_histogram.png')
+plt.show()
+
+If you want to read more about the history of Matplotlib, go to this website:
+
+http://www.aosabook.org/en/matplotlib.html
+
+-------------------------------------------------------------------------
+Basic Plotting with Matplotlib
+
+In this example, we will learn to use Matplotlib with Jupyter Notebooks, so if you try and run this from ipython, you might not get the same results. You can get almost anything done with the plot() function.
+For example:
+
+import matplotlib.pyplot as plt
+
+plt.plot(5,5,'o')
+plt.show()
+
+One disadvantage is that we cannot generate the plots again. Another disadvantage is that, since we are inside a notebook, every time you run code, it will assume all previous code as run. So, it is quite hard to determine what the value of a certain variable is at a particular moment in time.
+One advantage is that if we already have a figure object in place, it will add new plots to the same figure. For example, if to the previous figure:
+
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.title('Plotting Title')
+
+These labels and title will be added to the existing plt object, and a new one won't be summoned.
+
+Pandas:
+
+One great thing about pandas is that it has a built-in implementation of Matplotlib. So you can call the plot function from a DataFrame. In Python:
+
+#To plot a line chart.
+df.plot(kind='line')
+
+#To plot a histogram for a particular feature
+
+df['feature'].plot(kind='hist')
+
+-------------------------------------------------------------------------
+Dataset on immigration to Canada
+
+This lesson is about the dataset we will use for the rest of this course. In Python:
+
+import numpy as np
+import pandas as pd
+from __future__ import print_function
+
+!pip install xlrd
+
+print('xlrd installed')
+
+df_can = pd.read_excel('file.xlsx',sheetname='Canada by Citizenship',skiprows=range(20),skip_footer=2)
+
+#Display the DataFrame
+print(df_can.head())
+
+-------------------------------------------------------------------------
+Line plots
+
+It is a plot in the form of a series of data pints connected by straight line segments. It is one of the most basic type of chart and is common in many fields not just data science. The most important question is when to use line plots.
+The best use case for a line plot is when you have a continuous dataset and you're interested in visualizing the data over a period of time.
+For example if you look at immigration from Haiti to Canada from 1980 to 2013, you will see that there is an anomaly in 2010. This is because in 2010 there was a massive earthquake in the Caribbean country. So, how do we see this info in a line plot?
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+years=list(map(str,range(1980,2014)))
+
+df_can.loc['Haiti',years].plot(kind = 'line)
+plt.title('Immigration from Haiti')
+plt.ylabel('Number of immigrants')\
+plt.xlabel('Years')
+
+plt.show()
+
+-------------------------------------------------------------------------
+BASIC VISUALIZATION TOOLS
+
+In this lesson, you will learn about:
+
+*Area plots, and how to create them with Matplotlib.
+*Histograms, and how to create them with Matplotlib.
+*Bar charts, and how to create them with Matplotlib.
+
+-------------------------------------------------------------------------
+Area Plots
+
+The area plot is actually an extension of the line plot. This type of plot, depicts accumulated totals using numbers or percentages over time. It is commonly used when trying to compare two or more quantities.
+Remember that we have now modified the dataset we were working with, in the last example. Now let's generate the dataplot.
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_can.sort_values(['Total'], ascending=False, axis=0,inplace=True)
+df_top5=df_can.head()
+df_top5 =df_top5[years].transpose()
+
+df_top5.plot(kind='area')
+
+plt.title('Immigration trend of top 5 countries')
+plt.ylabel('Number of immigrants')
+plt.xlabel('Years')
+
+plt.show()
+
+-------------------------------------------------------------------------
+Histograms
+
+A histogram is a way of representing the frequency distribution of a variable. To make one, do this:
+1-Partition the spread of the numeric data into bins.
+2-Assign each datapoint in the dataset into a bin.
+3-Count the number of datapoints that have been assigned to the each bin.
+4-For each bin, create bars whose height is the number of points in the dataset that have fallen in that particular bin.
+
+The number of partitions determines the names of the partitions (quartiles, quintiles, percentiles, etc).
+Let's say we want to know the distribution of immigrants to Canada in the year 2013. The simplest way to do so, is with a histogram.
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+#If the bins are not aligned with the tick marks on the horizontal axis, then the histogram becomes hard to read. To prevent this from happening is to borrow the histogram function from Numpy.
+import numpy as np
+
+#What this function does is to partition the spread of the data into 10 bins of equal width.
+#Then it will compute the number of datapoints that fall in each bin.
+#Finally it will return the frequency of each bin and the bin edges.
+#We call these parameters count and bin_edges respectively.
+count, bin_edges = np.histogram(df_can['2013'])
+#We then use these data to create the histogram
+df_can['2013'].plot(kind='hist',xticks=bin_edges)
+plt.title('histogram of Immigration from 195 countries in 2013')
+plt.ylabel('Number of countries')
+plt.xlabel('Number of immigrants')
+plt.show()
+
+-------------------------------------------------------------------------
+Bar Charts
+
+A bar chart is a type of plot where the length of each bar is proportional to the value of the item that it represents. It is commonly used to compare the values of a variable at a given point in time.
+For example, let's say we want to compare the immigration flow from Iceland to Canada from 1980 to 2013. In Python:
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+years = list(map(str,range(1980,2014)))
+df_iceland = df_canada.loc['Iceland',years]
+df_iceland.plot(kind='bar')
+
+plt.title('Icelandic immigrants to Canada from 1980 to 2013')
+plt.xlabel('Year')
+plt.ylabel('Number of immigrants')
+
+plt.show()
+
+In the lab there is an example about horizontal charts.
+
+-------------------------------------------------------------------------
+SPECIALIZED VISUALIZATION TOOLS
+
+This lesson is about:
+
+*Pie charts, and how to create them with Matplotlib.
+*Box plots, and how to create them with Matplotlib.  
+*Scatter plots and bubble plots, and how to create them with Matplotlib.
+
+-------------------------------------------------------------------------
+Pie Charts
+
+A pie chart is a circular statistical graphic to provide data about a distribution. In the example, say we are interested in the immigration to Canada, continent-wise. In Python:
+
+import pandas as pd
+
+df_continents = df_canada.groupby('Continent',axis=0).sum()
+#To create the piechart, bring matplotlib
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_continents['Total'].plot(kind='pie')
+plt.title['Immigration to Canada by Continent [1980-2013]']
+plt.show()
+
+The are some very vocal opponents to the use of piecharts. They say that bar charts are way better at conveying the message. See the following article for some guidance:
+
+https://www.surveygizmo.com/survey-blog/pie-chart-or-bar-graph/
+
+-------------------------------------------------------------------------
+Box Plots
+
+A box plot is a way of statistically representing the distribution of given data through five main dimensions. The dimensions are :
+
+-Minimum: The smallest number in the sorted data.
+-First Quartile: The point that separates the first 25% of the data from the rest.
+-Median: The point that halves the dataset.
+-Third Quartile: The point that separates the first 75% of the data from the rest.
+-Maximum: Highest number in the sorted data.
+
+In the example, let's now say that we want to know immigration from Japan to Canada.
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+df_japan = df_canada.loc[['Japan'],years].transpose()
+df_japan.plot(kind='box')
+
+plt.title('Box plot of Japanese Immigrants from 1980-2013')
+plt.ylabel('Number of immigrants')
+
+plt.show()
+
+In the lab you can also see some things about horizontal plots.
+
+-------------------------------------------------------------------------
+Scatter plots
+
+Is a type of plot that displays values of two variables, to see if any correlation between the two exists. Remember that correlation is different from causation, so be careful to choose the independent variable.
+In the example, let's say we are interested in creating a plot that shows total immigration into Canada from 1980 to 2013. In Python:
+
+import matplotlib as mpl
+import matplotlib.pyplot as plt
+
+#For scatter plots, the x and y parameters are required
+df_total.plot(
+    kind='scatter',
+    x='year',
+    y='total'
+)
+
+plt.title('Total Immigrant population to Canada from 1980 to 2013')
+plt.xlabel('Year')
+plt.ylabel('Number of Immigrants')
+
+plt.show()
+
+There is an interesting variation of the scatter plot, called the bubble plot.
+
+-------------------------------------------------------------------------
+ADVANCED VISUALIZATION TOOLS
+
+This lesson is about:
+*Generating advanced visualization tools such waffle charts and word clouds.
+*Seaborn, and how to use it to generate attractive regression plots.
+
+-------------------------------------------------------------------------
+Waffle Charts
+
+This chart helps you visualize data against a whole. Let's say we want to chart data from Scandinavian countries to Canada. In our example, this comprises just Denmark, Norway and Sweeden. Sadly, matplotlib does not contain yet a function to create waffle charts. In the lab we will create our own function to plot waffle charts.
+
+-------------------------------------------------------------------------
+Word clouds
+
+This visualization helps you determine the importance of different words in a text sample. This helps you visualize easily the main topic of that text. Matplotlib doesn't have a library to create this. Fortunately, an open source library to create this type of chart is available online. We will check it in the lab.
+
+To install wordcloud on you windows machine, go to the whl downloads section of the python library, and install it manually with pip.
+-------------------------------------------------------------------------
+Seaborn and regression plots
+
+Seaborn is a library that helps you create plots much more smoothly than with matplotlib. Let's see how to create a regression plot. Let's go back to the total immigration regression plot:
+import seaborn as sns
+
+ax = sns.regplot(x='year',y='total',data=df_tot,color='green',marker='+')
+
+#If you look at the result, not only you will see the scatter and regression plots, but also the shade of the 95% confidence interval.
+
+-------------------------------------------------------------------------
+CREATING MAPS AND VISUALIZING GEOSPATIAL DATA
+
+*Folium, a data visualization library in Python.
+*Creating maps of different groups of the world and how to superimpose markers on top of a map.
+*Creating Choropleth maps with Folium.
+
+-------------------------------------------------------------------------
+Introduction to Folium
+
+Folium is a popular library in Python, and we use it to map geospatial data. With Folium you can create a map from any location of the world, as long you know its latitude and longitude. You can also create maps of different styles such as street level map, stamen map and a couple of others - which we will see in the lab.
+Creating a world map with Folium is easy:
+
+world_map = folium.Map()
+
+The cool thing about folium, is that the maps you create are interactive:
+
+#Here you can create a map of Canada.
+world_map = folium.Map(
+    location=[54.130,-106,35]
+    zoom_start=4
+    tile='Stamen Toner'
+)
+
+-------------------------------------------------------------------------
+Maps with markers
+
+Here we will learn how to superimpose markers into a Folium map. Continuing with our Canada example, we will create a map and we will add some markers onto it.
+
+canada_map=folium.Map(
+    location = [56.136,-106.35],
+    zoom_start=4
+)
+ontario = folium.map.FeatureGroup()
+ontario.add.child(
+    folium.features.CircleMarker(
+        [51.25,-85.32], radius=5,
+        color='red',fill_color='Red'
+    )
+)
+canada_map.add_child(ontario)
+#It would be nice to let others know what the marker represents
+folium.Marker([51.25,-85.32],
+    popup='Ontario').add_to(canada_map)
+
+#In the lab, we will create a real world example using crime data from San Francisco. We will also use it to create clusters of markers.
+
+-------------------------------------------------------------------------
+Choropleth Maps
+
+A chropleth map is a map that is colored and/or shaded by using statistical data. For a Choropleth map to be created we need a geoJson file that lists each country's geospatial boundaries to make sure it connects with it.
+A geoJson file must include: an ID, a name, a geometry type, and the coordinates of the geometry type.
+Let's go to Python:
+
+world_map=folium.Map(
+    room_start=2,
+    tiles='Mapbox Bright'
+)
+world_geo=r'world_countries.json'
+#Generate the map using the total population of each country to Canada from 1980 to 2013
+world_map.choropleth(
+    geo_path=world_geo,
+    data=df_canada,
+    columns=['Country','Total'],
+    key_on='feature.properties.name',
+    fill_color='Yl0rRd',
+    legend_name='Immigration to Canada'
+)
+
+#In the lab, we will expand on this to created some many choropleth maps.
+
+-------------------------------------------------------------------------
+On the side note, find out who Demis Hasabis is.

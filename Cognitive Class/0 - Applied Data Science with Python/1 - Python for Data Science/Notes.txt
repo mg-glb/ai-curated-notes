@@ -1,0 +1,279 @@
+PYTHON FOR DATA SCIENCE
+=======================
+
+Syllabus:
+
+1-Python Basics
+2-Python Data Structures
+3-Python Programming Fundamentals
+4-Working with Data in Python
+
+-----------------------------------------------------------------------------------------
+1-PYTHON Basics
+
+This course is about:
+*Writing your first program
+*Types
+*Expressions and variables
+*String operations
+
+-----------------------------------------------------------------------------------------
+Your first python program
+
+Syntactic errors are detected. Semantic ones not.
+
+-----------------------------------------------------------------------------------------
+Types
+
+*Integers (int)
+*Floats (float)
+*Strings (str)
+*Boolean (bool)
+
+-You can cast integers to floats with no problem
+-If you cast a float to an integer you will lose the decimal part.
+-If you cast a string to an integer, it'll check if the string contains an integer.
+-Casting True to number will get you a 1. Casting False to number will get you a 0.
+
+-----------------------------------------------------------------------------------------
+Expressions and variables
+
+-Division always results in a float.
+-If you want integer division use //
+-Using the type command in a variable gives the type.
+
+-----------------------------------------------------------------------------------------
+String operations
+
+-You can access a specific character of a string like you would in an array: s[i] (this type of indexing starts with 0)
+-Negative indexing a string starts from the end (this type of indexing starts with -1)
+-Typing s[i:j] gets the characters that start in j and with length j-1.
+-Tying s[::i] will get every i character (ie. i=2 will get every even character)
+-Typing len(s) gets the length of the string.
+-Multiplying strings replicates them.
+-You CANNOT change characters of a string.
+-Placing an r before a string nullifies backslashes.
+
+Methods:
+
+-Since strings are sequences, all methods that apply to lists and tuples can be used with strings.
+-The method upper() puts all lower caps into upper caps.
+-replace(str1,str2) changes str1 to str2 (all occurrences).
+-find(str) gives the location of the first occurrence of str. If no occurrence is found, the output is -1.
+
+-----------------------------------------------------------------------------------------
+PYTHON DATA STRUCTURES
+
+*Lists and Tuples
+*Sets
+*Dictionaries
+
+-----------------------------------------------------------------------------------------
+Lists and tuples
+
+-Tuples are ordered sequence. In python they are created by using ()
+-A tuple can contain many types.
+-The type of a tuple is Tuple.
+-Negative indexes are allowed.
+-Different types can be merged into a tuple.
+-Tuples are immutable. If you want to change a tuple you must replaced it completely.
+-Nesting is the process of putting tuples inside tuples.
+-Nested tuples can be accessed by using multiple brackets.
+
+-Lists are ordered sequences. In python, they are created by using []
+-Lists are mutable.
+-Lists are nestable.
+-Lists are subindexable.
+-Lists can be concatenated using the operator +
+-extend(x) adds the element x to the list.
+-append(x) does the same as extend().
+-del(L[i]) deletes the ith element of L and changes the index.
+-split(d) converts a string into a list, separating using d.
+-Aliasing is the effect of getting a variable modified by changing the value of another variable that points the same data.
+-To clone a list, do B=A[:] (A is assumed to be a list). This is used to avoid Aliasing between different references to the same list. Now A and B are diffrent objects.
+
+-----------------------------------------------------------------------------------------
+Sets
+
+-Sets are a type of collection
+-They are unordered.
+-Sets can only have a unique object in it. For example you cannot store 1 twice.
+-You can convert a list to a set by using the function set(L). This is called type-casting.
+-To ask if an object is in a set do x in X.
+-The set intersection is A & B.
+-The set union is A.union(B).
+-The A.issubset(B) function asks if A is a subset of B.
+
+-----------------------------------------------------------------------------------------
+Dictionaries
+
+-Dictionaries are object-like features.
+-They are created using {}
+-The keys must be unique and immutable.
+-The values can be immutable, mutable and duplicates.
+-Each key:value pair is separated by a comma.
+-dict.keys() gets the key set.
+-dict.values() gets the value set.
+
+-----------------------------------------------------------------------------------------
+PYTHON PROGRAMMING FUNDAMENTALS
+
+*Conditions and branching
+*Loops
+*Functions
+*Objects and Classes
+
+-----------------------------------------------------------------------------------------
+Conditions and branching
+
+Comparison operators take an input and return a boolean.
+In python we use indents to set if statements
+-if(condition):
+   conditionalLine
+-elif(condition):
+   conditionalLine
+-else:
+   conditionalLine
+
+-----------------------------------------------------------------------------------------
+Loops
+
+The range(N) function outputs a sequence of integers.
+-range(3) outputs [0,1,2]
+-range(10,15) outputs [10,11,12,13,14]
+
+For loops use indent, like the if function.
+for i in range(0,5):
+  squares[i]="White"
+
+The for-each loop iterates over lists and tuples.
+for square in squares:
+  print(square.color)
+
+The function enumerate(L) returns both the index and the element of a list.
+for i,square in enumerate(squares):
+  print("%r:%s"%(i,square.color))
+
+While loops run if a condition is met.
+i=0
+while(squares[i]="Orange"):
+  print(squares[i])
+  i+=1
+
+-----------------------------------------------------------------------------------------
+Functions
+
+Functions take an input and return an output.
+-len() returns the length of a list.
+-sum() returns the sum of a numeric list.
+
+Methods just run a piece of code without having to return anything.
+
+In python you can make your own functions:
+def funcName(x):
+  """
+  This function does something.
+  """
+  dosth
+  return sth
+
+y = funcName(x)
+
+If you add triple double quotes after the declaration you will be creating the documentation for the function.
+If you add a * to a parameter, it will be a variable length tuple.
+Inside a function if you assign the global modifier to a variable declaration, it'll be a global variable.
+
+Sort:
+The list.sort() method alters the variable list. The Sorted(list) leaves list unmodified, but creates a new object.
+-----------------------------------------------------------------------------------------
+Objects and Classes
+
+In python, every object has:
+
+*A type. An object is an instance of a particular type.
+*An internal data representation.
+*A set of procedures for interacting with the object.
+
+A Class or type methods are functions that every instance of that class or type provides.
+You can create a classes in python.
+
+class Circle(object):
+
+  def _init_(self,radius,color):
+    self.radius = radius;
+    self.color = color;
+  
+  def add_radius(self,r):
+    self.radius += r
+    return self.radius
+
+_init_ is the constructor in python. self is the newly created instance.
+
+RedCircle = Circle(10,"Red")
+
+The dir() function is useful for listing attributes.
+
+-----------------------------------------------------------------------------------------
+WORKING WITH DATA IN PYTHON
+
+*Reading files with open()
+*Writing files with open()
+*Loading data with pandas
+*Working and saving data with pandas
+
+-----------------------------------------------------------------------------------------
+Reading files with open()
+
+-Using the x = open(url,mode) function we open files.
+-Then we use x.read() to get the contents of the file as a string.
+-Using the x.readlines() we get a list of strings, each representing a line of the file.
+-Using the x.readlines(n) we get a portion of the line, and each time we call it back with another parameter, it will retrieve n characters from the line.
+
+The with open("File.txt","r") as File1 function will open the file, and close it automatically after the indent finishes.
+
+-----------------------------------------------------------------------------------------
+Writing files with open()
+
+Use the "w" mode to open with write permission. Then use the write() function to write into the file. Each time is called, it'll append a string to the file.
+
+The "a" mode will not create the file, but instead edit the file opened.
+
+-----------------------------------------------------------------------------------------
+Pandas
+
+Pandas is a popular library for data analysis.
+
+import pandas as pd
+
+csv_path = "File1.csv"
+df = pd.read_csv(csv_path)
+
+#This accesses the head
+df.head()
+
+#You can create a data from a dictionary
+
+dict = {"Color":["Red","Blue","Gray"],"Year":[1978,1991,2005],"Name":["Max","Linda","Peter"]}
+frame = pd.DataFrame(dict)
+
+x = frame[["Year"]]
+print(x)
+#x=[1978,1991,2005]
+
+The ix[i,j] method is useful for accessing particular cells in the dataframe.
+The ix[i:k,j:l] will create a new data frame
+
+-----------------------------------------------------------------------------------------
+Working with and saving data with pandas
+
+Say you have a dataframe df. Say you want unique values of 'Released'. Do:
+
+df['Released'].unique()
+
+Say you want a new data with songs made after 1979. Do:
+
+df1=df[df['Released']>=1980]
+
+To save as a csv do:
+
+df1.to_csv("new_songs.csv")

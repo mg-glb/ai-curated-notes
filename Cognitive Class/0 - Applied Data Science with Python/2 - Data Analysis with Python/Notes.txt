@@ -1,0 +1,715 @@
+DATA ANALYSIS WITH PYTHON
+=========================
+
+This course is about:
+*INTRODUCTION TO DATA ANALYSIS
+*DATA WRANGLING
+*EXPLORATORY DATA ANALYSIS
+*MODEL DEVELOPMENT
+*WORKING WITH DATA IN PYTHON
+
+---------------------------------------------------------------------------
+Introduction to Data Analysis
+
+*An example about a problem around estimating used car prices.
+*The dataset will be analyzed with python.
+*There will be an overview of the packages for data analysis.
+*Importing and exporting data.
+
+The question to answer in this course is:
+
+"Can we estimate the price of used cars?"
+
+---------------------------------------------------------------------------
+Understanding the data
+
+The data we will be using is a dataset that contains a list of used cars and their features. The data is in csv format. There is no header.
+
+---------------------------------------------------------------------------
+Python packages for data analysis
+
+*Scientific Computing (Pandas, Numpy, SciPy)
+*Visualization Computing (Matplotlib, Seaborn)
+*Algorithmic libraries (scikit-learn,)
+
+*Pandas provide fast computing for two dimensional tables called dataframes.
+*Numpy provides fast computing for processing matrices and arrays.
+*Scipy provides solutions for calculus.
+
+*Matplotlib provides solutions for plots and graphs.
+*Seaborn provides solutions for heatmaps, time series and violin plots.
+
+*Scikit-learn provides solutions for Machine Learning, Classification and Regression.
+*Statsmodels provides solutions for Statistical Analysis.
+
+---------------------------------------------------------------------------
+Importing and exporting data in Python
+
+There are two important parameters to take into consideration when importing or exporting data:
+-Format.
+-Filepath or dataset.
+
+With pandas, to import:
+
+import pandas
+
+df = pandas.read_csv("Filepath.csv",header=None)
+df.columns = headers
+print(df.head)
+print(df.tail)
+
+With pandas, to export do:
+
+import pandas
+
+path="Filepath.csv"
+df.to_csv(path)
+
+---------------------------------------------------------------------------
+Getting started with analyzing data in Python
+
+Steps:
+1-Understand the data before you do analysis with it.
+2-You should check both data types and data distribution.
+3-Locate potential issues with the data.
+
+Learn about pandas types:
+-object=string
+-int64=int
+-float64=float
+
+Why check data type?
+-Potential info and data mismatch
+-Compatibility with python methods.
+
+The df.dtypes() function is invoked, a list with the types of the columns is returned.
+The df.describe() function is invoked, a table with the statistical summary of the dataframe is returned.
+The df.describe(include='All') is invoked, the method uses columns with non numerical data.
+
+---------------------------------------------------------------------------
+Data Wrangling
+
+This lesson is about:
+*Preprocessing Data in Python
+*Dealing with missing values in Python
+*Data formatting with Python
+*Data normalization with Python
+*Binning with Python
+*Turning categorical variables into numerical ones in Python
+
+---------------------------------------------------------------------------
+Preprocessing Data in Python
+
+Data Preprocessing is the process of preparing raw data into normalized data.
+*Handling missing values is about what to do when all data is not available.
+*Data formatting is the process of standardizing the inputs into predermined ranges.
+*Data normalization is to bring all data into meaningful units, so that it can be meaningful and comparable.
+*Data binning, creates bigger sets from numerical sets of data.
+*Categorical Variables. How to make them numerical.
+
+---------------------------------------------------------------------------
+Dealing with missing values in Python
+
+Strategies to deal with missing values:
+*Identify values with "?", "N/A" or blank cells.
+*Refetch. Simple. Just try to retrieve the data again.
+*Drop the missing value.
+ -Drop the variable.
+ -Drop the missing entry.
+*Replace data
+ -Replace with average of data (of similar datapoints)
+ -Replace with mode.
+*Guess the data.
+ -Use metadata.
+ -Use the other values from the dataset.
+
+In python, to remove missing values:
+import pandas
+df1.drop_na(subset=['Column'],axis=0) #drops entire rows with missing values
+df2.drop_na(subset=['Column'],axis=1) #drops entire columns with missing values
+df3.drop_na(subset=['Column'],inplace=True) #allows modification of the missing value.
+
+To replace missing values do:
+
+import pandas
+mean = df1['normalized-losses'].mean()
+df1['normalized-losses'].replace(np.nan,mean)
+
+---------------------------------------------------------------------------
+Data formatting in Python
+
+To handle data with different formats, units and conventions. Data is obtained from different sources, people and stored in different formats. Bringing data to the same format, will make it easy to evaluate and compare. One good example is to change "NY", "N.Y", "NEW YORK", "new york" into "New York". Be careful not to do this if you want to track synonyms of different data.
+Other times you might want to use conversion of data. For example you might want to put a variable, such as fuel consumption efficiency into a single format. In the same data set, you might have values with "miles per gallon" and "Liters per 100 km". Simply use the one that you are the most comfortable with and go on.
+In python, if you want to change mpg to lp100km do:
+
+import pandas
+
+df['city-mpg'] = 235/df["city-mpg"]
+df.rename(columns = {"city-mpg","city-L/100km"},inline=True)
+
+Other times, the wrong type is assigned to the feature. For example price might be in a object format, whereas it should be better to have it in float64 (or int64) format. To change data do:
+
+import pandas
+
+df["price"] = df["price"].astype("int")
+
+---------------------------------------------------------------------------
+Data normalization in Python
+
+Data normalization is the process of making sure that the formatted values are in a range that is consistent. It also takes into account the impact of the value of a certain variable into the model.
+To make it clearer: take into account age and income. Age ranges from 0 to 120 where as (anual US) income ranges between 50000 to 200000. Later, when we do Linear Regression for example, income will influence the result much more than age, but it doesn't make it a better predictor. The process of normalization will make both variables range from zero to one. After this transformation, tables will have the same impact on the model.
+
+One method of normalization is Simple Feature Scaling. This consists of dividing the current value with the maximum value of the column. This normalizes to a range between zero and one.
+Another method is Min-Max. This consists of (xcurr-xmin)/(xmax-xmin). This normalizes to a range between zero and one.
+The third method is z-score. This consists of (xcurr-mu)/sigma where mu is the average of the feature, and sigma is the standard deviation of the variable. This varies between -3 and +3 but values outside this range are possible.
+
+In python
+
+#Simple Feature Scaling
+df1["length"] = df1["length"]/df["length"].max()
+
+#Min-Max
+df2["length"] = (df2["length"]-df2["length"].min()/df2["length"].max()-df2["length"].min())
+
+#Z-score
+df3["length"] = (df3["length"]-df3["length"].mean())/df3["length"].std()
+
+---------------------------------------------------------------------------
+Data Binning in Python
+
+Binning is to group data into sets called "bins". It is done to have a better understanding of the data distribution.
+For example the variable price (which in this example ranges from 5000 to 45000) can be binned into the sets Low, Medium and High. This process can help us see clearly that the majority of cars are of low price and only a few are high priced ones.
+
+---------------------------------------------------------------------------
+Categorical to Numerical conversion
+
+Most statistical models cannot take string as input. One example is "Fuel Type". Here the possible values are "Gas" and "Diesel".
+"One-Hot Encoding" is the process of creating new columns. In the example, we create the "Gas" and "Diesel" columns. For gas cars, we put a 1 in the "Gas" column, and a 0 in the "Diesel" column and viceversa.
+In python we do:
+
+import pandas as pd
+
+pd.get_dummies(df['fuel'])
+
+---------------------------------------------------------------------------
+EXPLORATORY DATA ANALYSIS(EDA)
+
+This module wants to teach you topics that will help you:
+*Summarize main characteristics of the data.
+*Gain better understanding of the data set.
+*Uncover relationships between variables.
+*Extract important variables.
+
+The most important question that we are trying to solve here is:
+"What are the characteristics that have the most impact in the car price?"
+
+The lessons are:
+*Descriptive Statistics.
+*GroupBy
+*Analysis of Variance (ANOVA)
+*Correlation
+*Correlation - Statistics
+
+---------------------------------------------------------------------------
+Descriptive Statistics
+
+When you begin to analyze data, it is important to first explore the data before building complicated models. One way of doing this, is to use Descriptive Statistics to get some metadata. In pandas, you can use the describe() method to get the statistical variables (mean, std, etc.).
+
+import pandas
+
+df.describe()
+
+Another method, which can be used with non numerical data is value_counts(). This counts the occurences of each value in the column.
+
+import pandas
+
+drive_wheels_counts = df["drive-wheels"].values_counts()
+
+drive_wheels_counts.rename(columns={'drive-wheels':'value_counts'}, inplace=True)
+drive_wheels_counts.index.name = 'drive-wheels'
+
+Other type of statistical measure is the Box Plot. Here the data is partitioned in quartiles. The median is the split of the dataset. The upper quartile represents the upper 75% of the data. The lower quartile represents the lower 25% of the data. The data between the quartiles is called the interquartile range. The upper extremes are data that are 1.5 times the interquartile range above the upper quartile. The lower extremes are data that are 1.5 times the interquartile range below the lower quartile. Finally, with boxplots you can detect outliers, which are the points that are above upper extremes and below lower extremes.
+Boxplots can help you see the distribution and skewness of the data.
+In python:
+
+import pandas
+
+sns.boxplot(x='drive-wheels', y='prices',data=df)
+
+Scatter plots
+Used to observe continuous data, the scatter plot represents each observation as a point. Scatter plots, show the relationship between two data:
+-The predictor/independent variable is on the x-axis.
+-The target/dependent variable is on the y-axis.
+example
+
+import matplotlib as plt
+import pandas as pd
+
+y=df['engine-size']
+x=df['price']
+plt.scatter(x,y)
+
+plt.title("Scatter plot of engine size vs price")
+plt.xlabel("Engine Size")
+plt.ylabel("Price")
+
+#Visualizing the scatterplot you will see that the variables are positively correlated.
+#Important: to visualize plots in python, you should use ipython instead of python in the command line.
+---------------------------------------------------------------------------
+GroupBy in Python
+
+Here you will learn about grouping, and the ways you can use it to gain more information about the dataset. In this example you will learn how to use GroupBy to correlate the "drive system" and "price variables". Dataframe.GroupBy() can be used on categorical variables. It can algo group using one or multiple variables.
+Let's say that we want to know how much does the price of a vehicle differ between "body-styles" and "drive-wheels".
+
+import pandas
+
+df_test = df['drive-wheels','body-style','price']
+df_grp = df_test.groupby(['drive-wheels','body-style'],as_index=False).mean()
+
+#Then use the pivot() method to transform the df_grp table into a pivot table. A pivot table has one variable
+#displayed along the columns and the other displayed along the rows.
+
+df_pivot = df_grp.pivot(index='drive-wheels',columns='body-style')
+
+#Heatmaps take rectangular grids of data and assign them a color intensity based on the data value at the
+#grid points. This helps you get visual clues about the data.
+
+plt.color(df_pivot, cmap='RdBBu')
+plt.colorbar()
+plt.show()
+
+---------------------------------------------------------------------------
+Analysis of Variance (ANOVA)
+
+Suppose we want to analyze a categorical variable and see how different categories affect the target variable. We cannot use numerical methods, as these would fail as the values we are handling are not neither cardinal nor ordinal.
+For our example, we will use this to determine how much does the make of the car impact the price of it. We set up a histogram of makes vs price. We see that prices varies according to make, but we cannot accurately determine the impact of each make on the price. For this, we use ANOVA. ANOVA finds correlation between different groups of the same categorical variable. In the car example, we can use this method to determine if there is any difference in mean price for different makes, such as Subaru or Honda.
+
+ANOVA returns two values:
+*F-test-score: calculates the ratio of variation between the group's mean over the variation within each of the sample groups.
+*p-value: determines whether the result is statistically significant. In short, a confidence degree.
+
+Cases:
+*A small difference between the means of two groups and large variations within each group will return a low value of f-test-score and large p-value. This means that the correlation between the two groupings is weak.
+*A large difference between the means of two groups and small variations within each group will return a high value of f-test-score and a small p-value. This means that the correlation between the two groupings is strong.
+
+In python:
+
+import pandas
+
+df_anova = df[['make','price']]
+grouped_anova = df_anova.groupby(['make'])
+a = grouped_anova.get_group('honda')["price"]
+b = grouped_anova.get_group('subaru')["price"]
+anova_results_I = stats.f_oneway(a,b)
+
+---------------------------------------------------------------------------
+Correlation
+
+Correlation measures up to what extent different variables are interdependent. For example Lung Cancer and Smoking are correlated. So rain and umbrella usage. Correlation != Causation. In Data Science we are more interested in correlation than in causation.
+
+Coming back to the car price example, we had a graph that related engine-size and price. We said that they were positively correlated. In python we can use seaborn's regplot() to create the scatter plot.
+
+import pandas
+import seaborn as sns
+import matplotlib as plt
+
+sns.regplot(x = 'engine-size', y="prices",data=df)
+plt.ylim(0,y)
+
+In another example, we see that miles per gallon is negatively correlated with price. However it still a good predictor of price.
+
+Finally we see that peak-rpm is not a good predictor of price, as the spread is too high, and the linear result is flat.
+
+---------------------------------------------------------------------------
+Correlation Statistics
+
+We can use methods to determine the strength of correlation relationships.
+Pearson Correlation:Uses two parameters, correlation coefficient, and p-value.
+-Large positive coefficient: Direct Correlation
+-Large negative coefficient: Inverse Correlation
+-Zero coefficient: No Correlation.
+-p-value<0.001=>Strong certainty
+-p-value<0.05=>Moderate certainty
+-p-value<0.1=>Weak certainty.
+-p-value>=0.1=>No certainty
+
+In python:
+
+coef_corr,p_value = stats.personr.(['horsepower'],df['price'])
+
+With all of this, we can create a Correlation Heatmap, of each variable with all others. Since what we are looking for is the impact for price, we will focus our attention on the part of the heatmap that corresponds to the price.
+
+---------------------------------------------------------------------------
+MODEL DEVELOPMENT
+
+This lesson is about:
+*Simple and multiple linear regression.
+*Model evaluation using visualization.
+*Polynomial regression and pipelines.
+*Measures for in-sample evaluation.
+*Prediction and decision making.
+
+The question we will try to answer is:
+"What is a fair value for a used car?"
+
+A model can be thought of as a mathematical equation used to predict a value given one or more variables. Similar to y=f(x1,x2,x3...xn). Usually the more relevant data you use, the more accurate your model is.
+
+---------------------------------------------------------------------------
+Simple and multiple linear regression
+
+*Simple Linear Regression (SLR) is the process of using one variable to predict a value.
+*Multiple Linear Regression (MLR) is the process of using multiple independent variables to predict a value.
+
+A line is defined as y = b0 + b1*x In linear regression, what we do is to determine the coefficients b0(intercept) and b1(slope). The mathematical definition of each coefficient is quite large and you have already seen it in college ;) so we won't focus on it now. We will use the libraries to do the dirty work.
+Uncertainty is displayed in the form of noise.
+
+To use Linear Regression in Python we do:
+
+from sklearn.linear_model import LinearRegression
+
+#Create the LR object
+lm = LinearRegression()
+#Determine X and Y
+X = df[['highway-mpg']]
+Y = df['price']
+#Train the model
+lm.fit(X,Y)
+y_pred = lm.predict(X)
+#View the slope
+print(lm.coef_)
+#View the intercept
+print(lm.intercept_)
+
+Multiple Linear Regression
+This is the use of several independent variables to predict the target value.
+y=b0+sum(bi*xi)1ton
+
+In python
+
+from sklearn.linear_model import LinearRegression
+
+lm1 = LinearRegression()
+Z = df[['horsepower','curb-weight','engine-size','highway-mpg']]
+lm1.fit(Z,df['price'])
+y_pred=lm1(Z)
+
+---------------------------------------------------------------------------
+Model Evaluation Using Visualization
+
+Regression plots give us good estimates about:
+*The relationships between two variables.
+*The strength of the correlation.
+*The direction of the relationship (positive or negative)
+A regression plot will give us both the scatterplot and the fitted linear plot.
+In Python:
+
+import seaborn as sns
+
+sns.regplot(x="highway-mpg", y="price",data=df)
+plt.ylim(0,)
+
+A residual plot represents the error between the actual values. Examining the predicted value and actual value we see a difference. We obtain that value by substracting the predicted value and the actual target value.
+
+We then plot that value on the vertical axis, with the dependent variable as the horizontal axis. When you finish, if the model is good, you should see:
+*A diffuse scatterplot.
+*That the mean of all residual data points should be zero.
+*That Variance is even across the entire residual plot.
+*There are no curvatures.
+
+If there are curvatures in the scatterplot, then the linear approximation is not good. You should consider other types of plots instead.
+Other type of error is if the variance increases with x.
+In Python
+
+import seabon as sns
+
+sns.residplot(df['highway-mpg'],df['price'])
+
+A distribution plot counts the predicted value vs the actual value. These plots are great for visualizing plots with more than one independent variable.
+We count the number of points that are equal to a certain value. A histogram is for discrete values. Pandas converts them to a distribution (in real life, distributions will be normaloid)
+A distribution plot creates two distributions: the predicted values, and the actual values.
+In python:
+
+import seaborn as sns
+
+ax1 = sns.distplot(df['price'], hist=False, color="r", label="Actual Value")
+sns.distplot(y_pred,hist=False,color="b",label="Fitter Values",ax=axl)
+
+---------------------------------------------------------------------------
+Polynomial Regression and pipelines
+
+What do we do when linear regression does not fit our data? We go to Polynomial Regression! Polynomial Regression consists of using curvilineal regression for a dataset. Then, you can use quadratic or higher order curves to determine what is going on in the model.
+If the model resembles a parabole, use Quadratic Regression y=c+bx+a(x^2)
+
+The degree of the regression makes a good difference, and can be a good fit if you pick the right value. In all cases, the relationship between the parameter and the variable is always lineal.
+In Python:
+
+import numpy as np
+
+f=np.plyfit(x,y,3)
+p=np.polydl(f)
+
+print(p)
+
+We can also have multidimensional Polynomial Regression. Remember that there will be instances of variables alone and products of variables as well. Numpy cannot process this type of model. But we can use scikit-learn to do so.
+
+from sklearn.preprocessing import PolynomialFeatures
+pr=PolynomialFeatures(degree=2)
+a=x['horsepower','curb-weight']
+x_polly = pr.fit_transform(a,include_bias=False)
+
+As the dimension of the data gets larger, we may want to normalize multiple features in scikit-learn. Instead we can use the preprocessing module to simplify many tasks.
+In Python:
+
+from sklearn.preprocessing import StandardScaler
+
+SCALE = StandardScaler()
+SCALE.fit(x_data[['horsepower','highway-mpg']])
+
+x_scale = SCALE.transform(x_data[['horsepower','highway-mpg']])
+
+Pipeline libraries
+
+There are many steps towards a prediction. Suppose you want to do Normalization=>Polynomial Transformation=>Linear Regression
+
+Pipelines do all of the steps of the preparation of the model, and the last step of the pipeline does the prediction.
+In Python:
+
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+
+from skelarn.pipeline import Pipeline
+
+#We create a list of tuples. The first element of each tuple contains the name of the estimator model.
+#The second element contains the element constructor.
+Input=[('scale',StandardScaler()),('polynomial',PolynomialFeatures(degree=2)),('mode',LinearRegression())]
+
+#Create the pipeline
+pipe=Pipeline(Input)
+
+#Train the pipeline
+pipe.train(X['horsepower','curb-weight','engine-size','highway-mpg'],y)
+#Predict a value
+y_pred = pipe.predict(X['horsepower','curb-weight','engine-size','highway-mpg'])
+
+---------------------------------------------------------------------------
+Measures for in-sample evaluation
+
+A way to numerically determine how good the model fits on the dataset. Two important features to determine the fit of a model:
+*Mean Squared Error (MSE)
+*R-Squared (R^2)
+
+MSE is about adding the squares of the errors of the actual and predicted targets and dividing them by the number of samples. In Python:
+
+from sklearn.metrics import mean_squared_error
+
+mse = mean_squared_error(df['price'],y_pred)
+
+R^2 is the coefficient of determination. Is the measure to determine how close is the data to the regression line. It is also the percentage of variation of the target variable (Y) that is explained by the linear model. Think about as comparing a regression model to the mean of the data points. In general
+r^2=(1-(MSE/MSEofy)). In Python:
+
+from sklearn.linear_model import LinearRegression
+
+lm = LinearRegression()
+X=df[['highway-mpg']]
+Y=df['price']
+
+lm.train(X,Y)
+
+lm.score(X,Y)
+
+The closer R^2 is to one the more accurate the model is. If it is negative, then it is overfitted.
+
+---------------------------------------------------------------------------
+Prediction & Decision Making
+
+Our final action is to see if the model we made is correct. The first thing you should do is to see if the model results make sense. You should use visualization. Then you should use numerical measures for evaluation. Finally you should compare different models.
+
+To generate sequences, do:
+
+import numpy as np
+
+new_input = np.arrange(1,101,1).reshape(-1,1)
+y_pred = lm.pred(new_input)
+
+This example will produce some negative values. We should discard them. Examine the regression, residual and distribution plots. The MSE is perhaps the most intuitive method for determining if a model is correct or not.
+
+Comparing MLR to SLR
+
+1-Is a lower MSE always impying a better fit?
+*Not necessarily.
+2-MSE for an MLR model will be smaller than the MSE for an SLR model, since the errors of the data will decrease when more variables are included in the model.
+3-Polynomial Regression will also have a smaller MSE than regular regression.
+4-A similar inverse relationship holds for R^2.
+
+---------------------------------------------------------------------------
+MODEL EVALUATION
+
+*Model Evaluation and Refinement
+*Overfitting, underfitting and Model Selection
+*Ridge Regression
+*Grid Search
+
+"How can you be sure your model works in the real world and works optimally?"
+
+---------------------------------------------------------------------------
+Model Evaluation and Refinement
+
+Model evaluation tells us how our model works in the real world. For example, In-Sample-Evaluation tells us how well our model fits to the data we used to train it. The problem is that it doesn't tell us about how good is to predict out-of-sample data. The solution is to use in-sample data to train the model and out of sample data to evaluate it.
+Separating training from test data is an important part of model evaluation. In practice we separate the data into a 7:3 train to test ratio. When we finish testing the model, we then add all of the data to test the model.
+In Python:
+
+from sklearn.model_selection import train_test_split
+
+x_train,x_test,y_train,y_test = train_test_split(x_data,y_data,test_size=0.3,random_state=0)
+
+Generalization Performance
+
+Generalization error is measure of how well our data does at predicting previously unseen data. The error we obtain using our testing data is an approximation of this error.
+
+For example, draw a Distribution Plot for the training data. You will see that the error is quite low. When you do so with the testing data, the error will be significantly higher.
+Using a lot of data for training gives us an acccurate means of determining how our model will perform in the real world, but the precision of the performance will be low.
+
+For example, suppose you use 90% of the data for training, and 10% for testing.
+*The first time we experiment, we get a good estimate of the training data.
+*The second time we experiment, we also get a good estimate of the training data. The catch is that, since we use a different split of data, the generalization error we will get will be different.
+*Do this several times, and you will get a good generalization performance of the model. However, its precision for a single datum may not be accurate.
+
+On the other hand, if we use less training data, the generalization performance will be less. But the performance for each datum will be higher.
+
+Cross Validation
+
+Cross Validation is the most common of out of sample metrics. It uses data more effectively than other methods, as each observation is used for both training and testing.
+
+*The data is partitioned in k-equal groups. Each group is called a fold.
+*Some of the folds can be used as a training set, which we use to train the model, and the remaining parts are used as a test set, which we use to test the model.
+*This is repeated until each partition is used for both training and testing.
+*At the end, we use the average results as the estimate of out-of-sample error.
+
+The evaluation metric depends on the model. In Python, the simplest way to apply cross-validation is to use the cross_val_score() function, which performs multiple out-of-sample evaluations:
+
+from sklearn.model_selection import cross_val_score
+
+#The first parameter is the model. In this case a regression model.
+#The other parameters are the predictor and the target.
+#The cv parameter is the number of folds.
+#The result is an array, containing the scores for each partition that was chosen as the testing set.
+scores = cross_val_score(lr,x_data,y_data,cv=3)
+
+#We then average the scores to get R^2
+np.mean(scores)
+
+The cross_val_predict() returns a prediction for each element when it was in the test set.
+
+from skelearn.model_selection import cross_val_predict
+
+#The difference with the previous function is that the result is an array of predictions,
+#instead of an array of scores.
+yhat=cross_val_predict(lr2e,x_data,y_data,cv=3)
+
+---------------------------------------------------------------------------
+Overfitting, underfitting and model selection
+
+In the last module we discussed polynomial regression. In this section, we will discuss how to pick the best polynomial order and problems that arise with selecting the wrong order polynomial.
+Consider a curve. We assume that the training points come from a polynomial function plus some noise. The goal of model selection is to determine the order of the polynomial to provide the best estimate of the function x.
+
+If we try to use a line to estimate the curve, we will get several errors. This is called UNDERFITTING, where the model is not flexible enough and exhibits underfitting.
+
+If we use a very high order polynomial, we will track the data very accurately, but we will miss the function completely. Specially in zones of the domain where there is little training data. This is called OVERFITTING, where the estimate fits the noise rather than the function.
+
+Let's do a model selection plot. In the independent variable, we put the order of the polynomial. In the target variable, we put the MSE.
+If we plot the training error, it will tend to zero with each polynomial. The test error however will go down at the beginning, but then increase as the order increases.
+The best fit is the order can be selected by looking at the minimum of the test error plot. Anything before that point is underfitting. Anything after that point is overfitting. There is still some error after the model evaluation, called irreducible error.
+There are other sources of error. One could be the assumption of a polynomial function itself. The function might be a trigonometrical or an exponential function. The real function, might be too difficult to fit or we might not have enough data to fit it.
+
+Another way of measuring model evaluation is by using R^2. In this case, we are looking at the maximum point. After the model surpasses the R^2 max, it decreases sharply (very much like a Bode plot).
+In Python:
+
+Rsqu_test = []
+order=[1,2,3,4]
+for n in order:
+  pr=PolynomialFeatures(degree=n)
+  x_train_pr=pr.fit_transform(x_train[['horsepower']])
+  x_test_pr=pr.fit_transform(x_test[['horsepower']])
+  lr.fit(x_train_pr,y_train)
+  Rsqu_test.append(lr.score(x_test_pr,y_test))
+
+#Finally we determine the minimum
+print(Rsqu_test.min())
+
+---------------------------------------------------------------------------
+Ridge Regression
+
+Ridge Regression prevents overfitting. It is useful for both polynomial and MLR.
+For example, when increasing the order of polynomials in the model, we might get overfitted easily by outliers in the data.
+What RR does, is to control the magnitude of the coefficients by means of the parameter alpha. Alpha, increases by magnitudes of ten. In this case, if alpha is too large, then the data is underfitted. If alpha is zero, the overfitting is evident. In order to select alpha, we use cross validation.
+In Python:
+
+from sklearn.linear_model import Ridge
+
+RidgeModel=Ridge(alpha=0.1)
+RidgeModel.fit(X,y)
+Yhat=RidgeModel.predict(X)
+
+#What this algorithm does, is to predict not targets, but rather R^2 scores for each value of alpha.
+#So, we then select the maximum value of Yhat
+print(Yhat.max())
+
+The overfitting problem increases if there are several features. In this case, the following happens:
+*As alpha increases, the R^2 for the test data will converge to a value, but the R^2 of the training data will begin to suffer pronouncedly.
+
+---------------------------------------------------------------------------
+Grid Search
+
+Grid Search allows us to scan through multiple parameters with few lines of code. Parameters like alpha are not part of the training or fitting process. In this case, alpha is a Hyperparameter.
+scikit-learn has a means of automatically iterating over these hyperparameters using a crossvalidation method called Grid Search.
+GS takes the model or objects you would like to train and different values of the hyperparameters.
+It then calculates the MSE or R^2 for various hyperparameter values. It finally chooses the best values.
+
+To select the hyperparameter, we split our dataset into three parts, the training set, the validation set and the test set.
+1-We train the model using different hyperparameters with the training set.
+2-We select the hyperparameter that minimizes the MSE or maximizes R^2 on the validation set.
+3-We finally test the model performance on the test data.
+
+In this example we will focus on the hyperparameters alpha and normalization parameter. But keep in mind that there are other hyperparameters.
+The value of your grid search is a python list that contains a python dictionary. The key is the name of the free parameter. This can be viewed as a table with various free parameter values.
+The grid search takes on the scoring method, in this case R^2, the number of folds, the model or object, and the free parameter values. In Python:
+
+from sklearn.linear_model import Ridge
+from skelarn.model_selection import GridSearchCV
+
+parameters1 = [{'alpha':[0.001,0.1,1,10,100,1000,10000,100000,1000000]}]
+
+RR=Ridge()
+Z=x_data[['horsepower','curb-weight','engine-size',highway-mpg]]
+Grid1 = GridSearchCV(RR,parameters1,cv=4)
+Grid1.fit(Z,y_data)
+
+Grid1.best_estimator_
+
+scores = Grid1.cv_results_
+scores['mean_test_score']
+
+For example, Ridge Regression has the option to normalize the data. In this case, in Python:
+
+from sklearn.linear_model import Ridge
+from skelarn.model_selection import GridSearchCV
+
+parameters2 = [{'alpha':[0.001,0.1,1,10,100],'normalize':[True,False]}]
+
+RR=Ridge()
+Z=x_data[['horsepower','curb-weight','engine-size',highway-mpg]]
+Grid1 = GridSearchCV(RR,parameters2,cv=4)
+Grid1.fit(Z,y_data)
+
+Grid1.best_estimator_
+
+scores = Grid1.cv_results_
+scores['mean_test_score']
+
+#We can print the scores for different parameter values:
+a=scores['params']
+b=scores['mean_test_score']
+c=scores['mean_train_score']
+for param,mean_val,mean_test inzip(a,b,c):
+  print(param, "R^2 score on test data:", mean_val,"R^2 score on train data:",mean_test)

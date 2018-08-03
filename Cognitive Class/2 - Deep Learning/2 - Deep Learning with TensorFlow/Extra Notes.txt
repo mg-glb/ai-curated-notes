@@ -1,0 +1,83 @@
+I should rewatch the entire class multiple times before actually leaving. As we noted down before, CNNs are good for datasets in which information is spatial. In other words, any dataset in which the swap of columns does not increase the entropy of the dataset, cannot be learned by a CNN.
+And the fundamental aspect of this is the convolution operation itself. Since it is an operation that requires that space does not vary while time does.
+
+Say you have images:
+X.data=[[1,-1,-1],[-1,1,-1],[-1,-1,1]]
+O.data = [[-1,1,-1],[1,-1,1],[-1,1,-1]]
+and you have filters:
+\=[[1,-1],[-1,1]]
+/=[[-1,1],[1,-1]]
+
+So, let's create a CNN that can determine whether what we have is an X or an O.
+1-Get the input.
+a=X.data
+2-Convolve and pool a and \ and vectorize by row:
+a*\=[[4,-4],[-4,4]]
+vec(a*\)=[4,-4,-4,4]
+3-Convolve and pool a and / and vectorize by row:
+a*/=[[-4,4],[4,-4]]
+vec(a*/)=[-4,4,4,-4]
+4-Concatenate the two resulting vectors and vectorize them by row:
+vec(a*\)||vec(a*/)=[[4,-4,-4,4],[-4,4,4,-4]]
+A=[4,-4,-4,4,-4,4,4,-4]
+5-Get the second input:
+a=O
+6-Convolve and pool a and \ and vectorize by row:
+a*\=[[-4,4],[4,-4]]
+vec(a*\)=[-4,4,4,-4]
+7-Convolve and pool a and / and vectorize by row:
+a*/=[[4,-4],[-4,4]]
+vec(a*/)=[4,-4,-4,4]
+8-Concatenate the two resulting vectors and vectorize them by row:
+vec(a*\)||vec(a*/)=[[-4,4,4,-4],[4,-4,-4,4]]
+B=[-4,4,4,-4,4,-4,-4,4]
+9-Create the translation matrices for the fully connected layer:
+Note that these are the weights of the perceptron we want to finally have.
+Xfilter=[["\",1,-1,-1,1],["/",-1,1,1,-1]]
+Ofilter=[["\",-1,1,1,-1],["/",1,-1,-1,1]]
+10-Eliminate the first element of both Xfilter and Ofilter and vectorize by row
+vec(Xfilter)=[1,-1,-1,1,-1,1,1,-1]=C
+vec(Ofilter)=[-1,1,1,-1,1,-1,-1,1]=D
+11-Do the vector multiplication of each of the inputs to get the Xscore and the Oscore:
+X:
+A*C=[4,-4,-4,4,-4,4,4,-4].[1,-1,-1,1,-1,1,1,-1]=32=A_Xscore
+A*D=[4,-4,-4,4,-4,4,4,-4].[-1,1,1,-1,1,-1,-1,1]=-32=A_Oscore
+AScores=[A_Xscore,A_Oscore]=[32,-32]
+O:
+B*C=[-4,4,4,-4,4,-4,-4,4].[1,-1,-1,1,-1,1,1,-1]=-32=B_Xscore
+B*D=[-4,4,4,-4,4,-4,-4,4].[-1,1,1,-1,1,-1,-1,1]=32=B_Oscore
+BScores=[B_Xscore,B_Oscore]=[-32,32]
+12-Do argmax on both AScores and BScores.
+argmax(AScores)=0=>X
+argmax(BScores)=1=>O
+13-Check if you got the class right.
+if(score=class):
+  print('Pass')
+else:
+  print('Fail')
+14-Use backprop to recalculate the weights
+
+Notes for the definition of Convolution of Matrices
+===================================================
+Given two matrices F and G, and:
+*The length and height of F being n=[n0,n1] and the length and height of G being m=[m0,m1]
+*The length-wise and height-wise strides of the convolution being S=[s0,s1]
+*The length-wise and height-wise paddings of G being P=[p0,p1]
+Such that:
+*The length of F is no more than the sum of the length of G plus twice the length-wise padding of G.
+*The height of F is no more than the sum of the height of G plus twice the height-wise padding of G.
+
+Then, the convolution of F and G is a matrix:
+*Of length, indexed by i, between 0 and the maximum between zero and the flooring of the Capacity Function for length.
+*Of height, indexed by j, between 0 and the maximum between zero and the flooring of the Capacity Function for height.
+*With elements indexed by i and j, resulting from:
+  1-The sum along all elements of F (going right and down) of:
+  2-The product of said element of F with an element of the Padded Function of G (G').
+  3-This element is located using the length-wise and height-wise Location Functions of G': pos(0,i,k) and pos(1,j,l)
+
+With:
+*The Capacity Function of dimension being the quotient between dimension of F minus the dimension of G plus twice the dimension-wise padding of G and the dimension-wise stride of the convolution.
+*The Padded Function of G, G'[x,y] returns G[x,y] if the tuple (x,y) is an index of G. Else if it falls in the padding area, it returns zero.
+*The Location Function of dimension pos(dim,a,b) returns the sum of the pointer function poi(dim,a,b) and the initiation function ini(dim)
+*The Pointer Function of dimension is the substraction of the current F dimension value to the product between the current dimension value of the convolution and the stride for said dimension.
+*The Initiation Function is the maximum between zero and the sum among the max dimension value of F, the padding value for that same dimension, and minus one.

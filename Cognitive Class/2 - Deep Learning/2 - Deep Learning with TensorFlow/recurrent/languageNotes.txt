@@ -1,0 +1,22 @@
+Historically, datasets big enough for NLP are hard to come by. This is in part due to the necessity of the sentences to be broken down and tagged with a certain degree of correctness - or else the models trained on it won't be able to correct at all. This means that we need a large amount of data, annotated by or at least corrected by humans. This is, of course, not an easy task at all.
+
+The Penn Treebank, or PTB for short, is a dataset maintained by the University of Pennsylvania. It is huge - there are over four million and eight hundred thousand annotated words in it, all corrected by humans. It is composed of many different sources, from abstracts of DoE papers to texts from the Library of America. since it is verifiably correct and of such a huge size, the Penn Treebank has been used time and time again as a benchmark dataset for Language Modelling.
+
+The dataset is divided in different kinds of annotations, such as a Piece-of-Speech, Syntactic and Semantic skeletons. For this example. we will simply use a sample of clean, non-annotated words for our model. This means that we just want to predict what the next words would be, not what they mean in context or their classes on a given sentence.
+
+For better processing, in this example, we will make use of word embeddings, which are a way of representing sentence structures or words as n-dimensional vectors (where n is a reasonably high number, such as 200 or 500) of real numbers. Basically, we will assign each word a randomly-initialized vector, and input those into the network to be processed. After a number of iterations, these vectors are expected to assume values that help the network to correctly predict, these vectors are expected to assume values that help the network to correctly predict what it need to - in our case, the probable next word in the sentence. This is shown to be very effective in Natural Language Processing tasks, and is a commonplace practice.
+
+Word Embedding tends to group up similarly used words reasonable together in the vectorial space. For example, if twe use T-SNE to flatten the dimensions of our vectors into a 2-dimensional space and use the words these vectors represent as their labels, we might see something like this.
+
+Words that are frequently used together, in place of each other, or in the same places as them tend to be grouped together - being closer together the higher these correlations are.
+
+Now that we know this, let's go to Python. Remember that when you run python files you have to do it from the directory the file is located, otherwise you will get a cwd error.
+
+About python properties:
+-These are definitions that help you define getters and setters to classes. So for example, if you define a getter and setter for a certain variable, you can define a property - with the same name as the target variable, so that if someone references it directly, it will automatically call the getters and setters, without invoking the variable.
+-The reason behind this, is that in Python, object attributes cannot be set to private (like in java).
+-However, programmers familiar with decorators in Python can recognize that the above construct can be implemented as decorators. We can further go on and not define names for setters and getters as they are unnecessary and pollute the class namespace. For this, we reuse the name of the property while defining our getter and setter functions.
+
+Now we will try to create a script that implements a RNN with LSTM/RNN units for training/sampling from character-level language models. In other words, model takes a text file as inut and trains the RNN network that learns to predict the next character in a sequence.
+So, this means that I must improve my chances if I want to go with all of this. It seems this algorithm takes a lot more time than the next word RNN. So, if I ever get to make one, it should be pretty damn hard to accomplish - as a matter of fact, the network I'm training right now has not finished yet. I should research on how to get already trained NNs, so that I don't waste much time on this. And that is where I start.
+

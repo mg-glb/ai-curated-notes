@@ -1,0 +1,332 @@
+DEEP LEARNING FUNDAMENTALS
+==========================
+In this course you will:
+*Get introduced to deep learning.
+*Develop an intuition for why deep learning is the solution to many recent problems.
+*Learn about the different deep networks that are available.
+*Learn about the different deep learning platforms that are available.
+*Learn about the diferent deep learning libraries and how they differ from deep learning platforms.
+
+By means of each of these different modules:
+*Introduction to Deep Learning.
+*Deep Learning Models.
+*Additional Deep Learning Models.
+*Deep Learning Platforms & Libraries.
+
+--------------------------------------------------------------------------------------
+Introduction to Deep Learning
+
+*Deep Learning, what it means and how it came around.
+*Difference between conventional neural networks and deep learning.
+*Why one chose deep networks over shallow networks.
+*The vanishing gradient problem.
+
+--------------------------------------------------------------------------------------
+Deep Learning, the series introduction
+
+This course will help you determine what Deep Learning really is. This will help you understand without having a strong knowledge on Mathematics or Software Engineering.
+You can go to Nielsen's book about Neural Networks for more info. But the thing is that you will have to dive deep into the Math of Neural Networks if you really want to understand them. Actually you need to go back to them. You already were deep once into them.
+--------------------------------------------------------------------------------------
+What is a Neural Network?
+
+A neural network, consists of a collection of neurons. Neurons consist of inputs, an engine and the output. Neural networks are organized into layers. The input layer, the hidden layers and the output layer. The neural net can be viewed as the result of spinning classifiers together in a layered web. This is because each node has a classifier. The target class you are looking for is in the final layer.
+Forwardpropagation is a technique where the signal goes from the initial layer to the final layer, through the hidden layers. A Multi Layered Perceptron is net of forwardly propagated perceptrons. Each node has its own set of weights and biases. The accuracy of the net is as good as the biases and weights it has.
+But a question you might have now, is why develop such a complicated solution when you can use a simple classifier? The reasons will be given in the next video.
+
+--------------------------------------------------------------------------------------
+Three Reason to go Deep
+
+When patterns get very complicated, you will want to switch to Neural Networks. This is because NN's will outperform other models (in computational time) in those particular cases. GPUs can train them a lot faster as well.
+For example, let's say we want to detect a face within an image. We would:
+1-See different shades of color within the image.
+2-Detect different shapes within each group of colors.
+3-Detect facial shapes within the group of shapes.
+4-Determine whether the groups of facial shapes actually determine a face.
+
+The ability to use simple patterns to create more complex ones is what gives Deep Nets their strength. In fact, the ability of deep nets to recognize patterns in data has exceeded expectations. In fact a deep net from Google has recently beat a human in recognizing patterns. NNs architecture are inspired by the human brain.
+However, there is a catch: the deeper a net becomes, the harder it is to train it. Finally, GPUs have become an efficient way to train nets much faster than normal cpus have.
+In the following lesson we will learn how to pick the best tool for each machine learning problem.
+
+--------------------------------------------------------------------------------------
+Your choice of deep net
+
+Before jumping into a problem, you have to determine how are you going to solve it. And to know that, you need to know what type of model solves what type of problem best. For example you need to determine whether the problem you have is a classifier problem or a pattern recognition one.
+First, I want you to remember the terminology from the Machine Learning course we did some time ago. For example, if you are interested in unsupervised learning - that is the extraction of patterns out of unlabeled data - your best bet would be a RBM or an Autoencoder. On the other hand if you want to do a processing task like sentiment analysis, parsing and named entity recognition use a Recursive NN, or a Recursive Neural Tensor Network (RNTN). For any languge model that operates on the chracter level, use a Recurrent Net. For image recognition use a Deep Belief Network or a Convolutional Net. For object recognition, use a Convolutional Net or an RNTN. Finally, for speech recognition use a Recurrent Net.
+For Classification: use MLPs and RELUs. For time series analysis, use Recurrent Nets.
+
+--------------------------------------------------------------------------------------
+An Old Problem
+
+Deeps are great. But they have a problem. They use a method called backpropagation. And, underlying this method is a mathematical problem: Vanishing Gradients. When the gradient is large, the net will train quickly. When the gradient is small, the net will train slowly. And in training, the gradient decreases quickly in the early layers of the net, while remaining high on the later layers.
+And this is a fundamental problem, since the first layers of the net are the ones responsible of detecting the early features of a pattern. And if the early stages get it wrong, your entire model is flawed.
+The process of training a net is called backpropagation or back-prop. Unlike the prediction part of the problem, it will calculate the gradient from right to left.
+The thing is that neurons at an earlier stage depend on a lot more gradients than neurons on later stages. And since gradients are values that vary from 0 to 1, the more gradients we have, the lesser the value of the variation will be.
+This problem affected deep nets substantially, up until three papers - written by Hinton, Lecun and Bengio in 2006 and 2007 - made a significant breakthrough.
+
+--------------------------------------------------------------------------------------
+Deep Learning Models
+
+This module is about:
+*Restricted Boltzmann Machines, and how they overcame the Vanishing Gradient problem.
+*Deep Belief Nets and how they are different from RBM's.
+*Convolutional Nets and what applications they are best for.
+*Recurrent Nets and what applications they are best for.
+
+--------------------------------------------------------------------------------------
+Restricted Boltzmann Machines (RBM)
+
+This method can find patterns in the data by reconstructing the input. The method was the created  by Geof Hinton. These are the characteristics of an RBM:
+
+*It is a shallow two layer net (one visible and one hidden layer)
+*Each node in the visible layer is connected to a node in the hidden layer (imagine a connection matrix here)
+*The net is "Restricted", because no two nodes in the same layer share a connection. To be more mathematically precise, the net forms a bi-partite graph.
+
+An RBM is the mathematical equivalent of a two way translator: in the forward pass, an RBM takes the inputs and translates them into a set of numbers that enconde the inputs. In the backward pass, it takes this set of numbers and translates them back to form the re-constructed inputs.
+
+The RBM algorithm consists of three steps:
+a)Every input is combined with an individual weight and one overall bias, and the result is passed to the hidden layer which may or may not activate.
+b)In the backward pass, each activation is combined with an individual weight and an overall bias, and the result is passed to the visible layer for reconstruction.
+c)At the visible layer, the reconstruction is compared against the original input to determine the quality of the result. It does so by using a measure called KL Divergence.
+
+Steps a through c are repeated with varying weights and biases until the quality is maximized.
+
+One interesting thing about RBMs is that the data does not need to be labeled. This is good for things like photos, videos, voices and sensor data - all of which tend to be unlabeled. Moreover, RBMs make decisions about which input is important and how each input should be combined to form patterns. In other words, an RBM is part of the familiy of feature extractor neural nets. These nets are designed to recognize inherent patterns in the data. These nets are also called autoencoders, because in a way, they have to encode their own structure.
+But how does exactly an RBM solve the problem of a vanishing gradient? We will see that in the next video.
+
+But before, let's see what does Wikipedia have to say about these beauties:
+
+*An RBM is classified as a Stochastic NN. This type of NN is characterized by being initialized with random weights. This feature helps the function escape local minima.
+*A Boltzmann Machine is a variant of a Random Markov Field (MRF) this type of model has the peculiarity that it is memoryless. So, to be more precise, a RBM is is a field composed of two or more variables that has a strong Markov (memoryless) property. NOTE: Markov Chains are special cases of MRF's where the random variable is discrete - this is key, because if you can remember what a Markov Chain is, then you will understand what a MRF is and if you get that, you will understand the mathematics of a RBM.
+*Also note that Ising Models are special cases of Markov Random Fields. This should be something to take into account when remembering what Hopfield Networks are.
+*An important conclusion about what I have just read is that if I want to really handle all of this with ease, I need to get back at training with Mathematics, so that my mind becomes flexible again with this. Othewise I won't understand nothing deep about this.
+*Mental Note: Should I take this course in parallel with TensorFlow one's??? There I have the technical matter quite solved. The thing is that I don't know for sure how much will I need. So need to check what I need to do every day, or at least every week.
+
+--------------------------------------------------------------------------------------
+Deep Belief Network
+
+If you take the concept of RBMs and couple it with a clever training algorithm, we obtain a powerful new model that finally solves the vanishing gradient problem: The Deep Belief Network.
+This is algo a Geoff Hinton creation, that is an alternative to back-prop. Basically it is a stack of RBMs, where the hidden layer of one RBM is the visible layer of the next - that means they are intercalated. A DBN is trained as follows:
+a-The first RBM is trained to re-construct its input as accurately as possible.
+b-The hidden layer of the first RBM is treated as the visible layer for the second one. This RBM is then trained using the outputs from the first RBM.
+c-This process is repeated until every layer in the network is trained.
+
+An important aspect of a DBN is that each one of it's layers learns the entire input. In other kinds of models, early layers detect simple patterns and later layers recombine them. A DBN, on the other hand, works globally by fine tuning the entire input in succession as the model slowly improves - similarly to a camera focus.
+
+After this initial training, the RBMs have created a model that can detect inherent patterns in the data. But we still don't know exactly what the patterns are called. To finish training we need to introduce labels to the patterns and fine-tune the net with supervised learning.
+To do this, you need a very small set of labeled samples so that the features and patterns can be associated with a name. The weights and biases are altered slightly, resulting in a small change in the net's perception of the patterns, and often a small increase in the total accuracy. Fortunately, the set of labeled data can be small relative to the original set, which as we've discussed, is extremely helpful in real world applications.
+So, let's recap the benefits of a DBN. DBNs need a small labeled dataset, and can be solved easily using GPUs.
+
+--------------------------------------------------------------------------------------
+Convolutional Nets
+
+This net has dominated the AI field in recent years, as it is one of the nets that is used in computer vision. However, they are tricky to understand. It is the brainchild of Yann Legun. It is believed that Facebook uses a version of CNN. If you are interested in the math of CNNs, you can go to Andrej Karpathy's CS23IN course notes.
+The first layer is the convolutional layer. Imagine the first layer as a filter of neurons, each looking at a different part of the image. A filter is able to determine if a pattern is occurring in a particular region of the image. The reason this type of network is called a convolutional net, is because it uses the technique of convolution (look it up in your math notes) to search for a particular pattern. One important note is the tweaking of the original biases of the initial layer, as it can help you detect patterns much faster.
+So in this type of net, neurons are deployed as a grid, and perform the convolution operation. A CNN is organized as a flashlight structure. Neurons in the same filter share the same weights and biases.
+The following layers are RELU and pooling, as they help you build upon the simple patterns discovered in the convolutional layer. RELU allows that training goes fast in the critical early stage. Pooling allows dimensionality reduction, so that only filters with patterns are detected.
+At the end, a classifier is attached to the pooling layer, so that we know what we are pattering.
+
+--------------------------------------------------------------------------------------
+Recurrent Nets
+
+If the patterns in your data change with time, the best option for a 
+model is a Recurrent Neural Network. This deep learning model has a simple structure with a built-in feedback loop, allowing it to act as a forecasting engine.
+RNNs have been popular for a long time, but their spike in popularity comes from the recent work by Schmidhuber, Hochreiter and Graves. Their applications are extremely versatile: from speech recognition to driverless cars. All networks we've seen so far have been feedforward networks: they only go in one direction, from input to output, one layer at a time. In a recurrent net, the output of a layer is added to the next input and fedback into the same layer, which is typically the only layer in the entire network. You can think of this process as a passage through time.
+When the input is singular and the output is a sequence, a potential application is image captioning. A sequence of inputs with a single output can be used for document classification. If both the input and output are sequences, then these nets can classify videos frame by frame. If a time delay is introduced, the net can statistically forecast the demand in supply chain planning.
+
+Like we've seen with other deep learning models, stacking RNN's on top of each other, you can form a net capable of more complex output than a single RNN working alone. Typically an RRN is a difficult net to train. Unfortunately the back-prop problem other nets have is exponentially compounded in this model. The reason for this is that each time step is the equivalent of an entire layer in a feedforward network. So, training an RNN for 100 time steps is like training a 100-layer feedforward net - this leads to exponentially small gradients and a decay of information through time. Start stacking the net, and the vanishing gradient problem explodes.
+There are several ways to address this problem - the most popular of which is Gating. Gating is a technique that helps the net decide when to forget the current input, and when to remember it for future time steps. The most popular gating types today are GRU and LSTM. Besides gating, there are other types of techniques, like gradient clipping, steeper gates and better optimizers.
+When it comes to training a RNN, GPUs are substantially better than CPUs. This was validated at Indico, which uses these nets on text processing tasks liike sentiment analysis and helpfulness extraction (what is that?). The team found that GPUs were able to train the nets 250 times faster! That is the differentce between one day of training, and eight months!
+One final word about recurrent nets. When would you use a recurrent net over a feedforward one?
+Feedforward nets output one value, which in many cases was a class or a prediction. A recurrent net is suited for time series data, where an output can e the next value in a sequence, or the next several values. Therefore, the choice of type of net will depend on whether the problem at hand is classification or a regression one.
+
+On the next video will look at a family of deep learning models known as autoencoders.
+
+--------------------------------------------------------------------------------------
+Additional Deep Learning Models
+
+This module is about:
+*Autoencoders, and how RBMs are a special type of autoencoders.
+*Recursive Neural Tensor Nets, and what applications they are good for.
+*Several applications that leverage deep learning technology.
+
+--------------------------------------------------------------------------------------
+Autoencoders
+
+This type of NN is good at applying labels to newfound structures in previously unlabeled data. An autoencoder is an NN that takes a set of typically unlabelled inputs, and after encoding them, tries to reconstruct them as accurately as possible. As a result of this, the net must decide which of the data features are the most important, essentially acting as a feature extraction engine.
+ACs are typically very shallow. Autoencoders are typically trained with back-prop with loss.
+As opposed to "cost", "loss" measures the amount of information that was lost when the net tried to reconstruct the input. A net with a small loss value will produce reconstructions that look very similar to the originals.
+Not all of AC's are shallow however. Deep Autoencoders are extremely useful tools for the problem of dimensionality reduction. Consider an image of 28x28 pixels. That would require an impressive number of 784 inputs! A DAC, would take this number of inputs down to 30, and still maintain information about the key image features. When decoding the output, the net acts like a two-way translator. It reconstructs the original image using the translator.
+Autoencoders are much more efficient than Principal Component Analysis at reducing a large number of variables down.
+
+--------------------------------------------------------------------------------------
+Recursive Neural Tensor Nets
+
+Sometimes it is good to detect the hierarchical structure of the data. For this, Recursive Neural Tensor Networks (RNTNs) are your best bet. RNTN were conceived by Socher at Metamind. They were originally designed for Sentiment Analysis, since the sentiment of the sentence does not just depend on its component words, but also on the order in which they are syntactically grouped.
+An RNTN, consists of a parent node, which we will call the Root, and the child nodes, which we will call the Leaves. The leaves are not connected to each other, but through the root. So, the leaves receive the input, they send it to the root, and then the root uses a classifier to fire a class and a score. The complexity of this net comes from the recursive way the data moves thoughout the net.
+Let's use the following example: we feed a sentence to the tree, and we assign a different word to each leaf node (NOTE:The leaves do not receive the words per se, but rather a vector representation of the words). When a node receives a word, it fires two values: the class and the score.
+*The score represents the quality of the classification.
+*The class is the structure of the word or other syntactical structure we've sent.
+In the second step, we send the parse + the third word, and redo the process. This is why this model is called Recursive. It goes higher in the tree up until the entire sentence is finished. The net relies on the score fired up the final root node.
+Repeat the process using different trees, each having a different structure and each producing a different score. Once the net has the final structure, it uses it to label the syntactical class to which each parse belongs to. It does so, by selecting the highest score among all different trees. After that, it will detect what the noun phrase is, the verb phrase, and each of its particular components.
+The net is trained by using labeled data, and it will give higher scores to test data that fits the training data the most.
+
+RNTNs are used in:
+*Natural Language Processing (NLP), for both syntactical and sentiment analysis.
+*They are also used to parse images, specially when an image contains a scene with many different components.
+
+In the next lesson we will see at the many applications of Deep Learning models.
+
+--------------------------------------------------------------------------------------
+Use Cases of Deep Learning Models
+
+The uses of deep learning are plentiful. So much that it's almost impossible to create a full list of them. And reason this is so, is because Machine Learning is a relatively new subject.
+*Machine Vision.
+*Image Search.
+*Face Recognition.
+*Object Recognition: An example of this is clarifai. This app uses convolutional nets to recognize things and concepts in a digital image.
+*Video Recognition.
+*Speech Recognition.
+*Fact Extraction: For example, you say "Obama completed his tour of Asia, met with leaders, and went back to the US". The system will learn that: "Obama is POTUS" and "He met with leaders" Then "Asia has leaders"
+*Machine Translation.
+*Sentiment Analysis: An example of this is metamind. It is used for twitter sentiment analysis. You can search for username, keyword or hasthtag.
+*Character Level Text Processing.
+*Medical Uses: 
+  *Cancer detection and survival.
+  *Drug Research.
+  *Radiology.
+*Finance.
+*Advertising.
+*Fraud Detection.
+*Merchandising.
+*Agriculture.
+
+--------------------------------------------------------------------------------------
+Deep Learning Platforms and Libraries
+
+This module is about:
+*The different deep learning platforms that are available.
+*The different deep learning libraries that are at your disposal.
+*The difference between deep learning platforms and libraries, and when to use each.
+
+--------------------------------------------------------------------------------------
+What is a deep net platform?
+
+A deep learning platforms allow you to use nets without having to use them. There are two types of nets: software platforms and full platforms. A DLP provides a set of tools and an interface for building custom deep nets. Typically they provide the user with a selection of deep nets to choose from, along with the ability to integrate data from different sources, manipulate data.
+
+A platform is an out-of-the-box application that lets you configure the deep net's hyper-parameters through an intuitive UI. With a platform, you don't need to know anything about coding in order to use the tools. The downside is that you are constrained by the platform's selection of deep nets as well as the configuration options - as well as potential Copyright issues in the future. But for anyone looking to quickly deploy a deep net, a platform is the best way to go.
+A software library is a set of functions and modules that you can call through you own code in order to perform certain tasks. Deep net libraries give you a lot of extra flexibility with net selection and hyper-parameter configuration. For example, there aren't many platforms that let you build a RNTN, but you can code your own with the right dn library! The obvious downside is that you need coding experience.
+
+--------------------------------------------------------------------------------------
+H2O.ai
+
+This is a software deep net platform, useful to run models as an ensemble. It offers one deep net - multilayer perceptron - and few other machine learning algorithms. Besides that, the platform offers useful features, such as data pre-processing. The platform has sophisticated data munging capabilities as well as an intuitive model management UI. The other supported machine learning models include:
+*GLM.
+*Distributed Random Forests.
+*K-Means Clustering.
+*Gradient Boosting Machine based on RFs.
+*Cox Proportional hazard.
+*Naive Bayes Classifiers.
+
+Backpropagation is carried out by means of the L-BFGS algorithm.
+
+H2O comes with built-in platforms such as HDFS, AWS-S3, SQL and NO-SQL. While the platform has an intuitive UI, you can access the tools through a familiar programming environment like R, Python, JSON, and several others. You can even model and analyze data with Tableau, Microsoft Excel and R Studio.
+H2O also offers ensemble training, which allows you to obtain a model with the optimal set of hyperparameters. The platform can be downloaded as a software package. The package offers:
+-In-memory map-reduce capability.
+-Distributed parallel processing.
+-Columnar compression
+
+--------------------------------------------------------------------------------------
+Dato GraphLab
+
+If your deep learning project requires graph analytics and other important algorithms, the Dato GraphLab Create might be a good choice.
+The platform offers two deep nets and a whole host of machine learning and graph algorithms. Let's take a closer look.
+If you supply GraphLab with image data, it will automatically select a Convolutional Net. For any other type of data, it will select a multilayer perceptron. In addition to deep nets, the platform has several built-in algorithms such as:
+*Text Analytics.
+*A Recommender.
+*Classification.
+*Regression.
+*Clustering.
+
+As the name also suggests, they also provide Graph Analytics tools. This feature is unique among deep learning platforms. Just like H2O, GraphLab provides a great set of data munging features. It provides support for:
+*Hadoop.
+*Spark.
+*AWS-S3.
+*Pandas Dataframes.
+*Many More!
+
+GraphLab also offers an intuitive UI for model management. In addition to this, GraphLab Canvas allows you to create sophisticated visualization of your model's results.
+
+The whole package must be downloaded as a package, so that you can install it in your own hardware. There is SArray which is a columnar representation, SFrame, a tabular storage model, and SGraph, the graph model. According to the platform's website, these tools are designed to handle terabytes of data analysis at interactive speeds.
+An important note is that the GraphLab Create platform supports the use of GPUs. This feature is becoming more and more popular. You can use the GraphLab models to build different types of predictive analytics tools, which can then be set up as services. These services can be programatically accessed through an API on your computer or mobile device.
+Information on the website is limited, but if you sift through the API's documentation you'll see if the product is a good fit for your project.
+
+--------------------------------------------------------------------------------------
+What is a Deep Learning Library?
+
+If you're coding a deep neural network, using a Deep Learning software library is a sure-fire way to simplify the development process. Rather than re-invent the wheel, you can take advantage of well tested code that was created by experts in the field.
+These types of libraries are created by high-quality software teams. Many libraries are open-source and surrounded by big communities that provide support and contribute to the codebase. Deep learning has plenty of great libraries available.
+If you want to create a commercial app that requires the use of a deep net, your best bet is to use a commercial-grade library, such as:
+*deeplearning4j
+*Torch
+*Caffe
+For Scientific Projects, you can use libraries such as Theano or deepmat.
+
+--------------------------------------------------------------------------------------
+Theano
+
+Theano, created by the university of Montreal, provides an important set of functions for building deep nets that will train quickly on your machine. Let's take a look at what the libraty offers.
+Theano is a Python library that lets you define and evaluate mathematical expression with vectors and matrices, which are rectangular arrays of numbers. This is important, since all NN operations can be reduced to matrix operations. In practice, you will be performing multiple parallel matrix operations. So if you build a NN with this underlying structure, you could potentially use just a single machine with a GPU to train enormous nets in a reasonable time window.
+Remember however, that if you use Theano, you will have to build your nets from the ground up. Since the library does not provide complete functionality for creating a specific type of deep net, you'll need to code every aspect of a net, such as:
+*The model.
+*The layers.
+*The activation.
+*The training method.
+*Over-Underfitting prevention methods.
+The good thing is that Theano allows you to build your implementation atop a set of vectorized functions, providing a highly efficient optimized solution.
+
+There are many other libraries that extend Theano:
+*Block: provides wrappers for each of Theano's functions, so that you can call the functions with parameters.
+*Lasagne: allows you to build nets using hyperparameters.
+*Keras: gives a minimalist design that allows you to build a net layer by layer, train the net and run it.
+*Passage: suited for text analysis applications that require a recurrent net.
+
+Theano provides no support for distributed multi-node implementations. So, Hadoop implementation is out of reach at this moment.
+
+--------------------------------------------------------------------------------------
+Caffe
+
+Caffe is a library that is used to build applications that use either machine vision or forecasting. This library lets you build our own deep nets with a sophisticated set of layer configuration options. You can even access premade nets that were uploaded to a community website.
+Caffe was originally designed for CV tasks. So, it is well-suited for convolutional nets. However, recent versions of the library provide support for:
+*Speech and text recognition.
+*Reinforcement learning.
+*Recurrent net building.
+The library is written in C++ with CUDA, so, applications can easily switch between a CPU and a GPU as needed. Matlab and Python interfaces are also available for Caffe. With Caffe, you can build a deep net by configuring its hyper-parameters. In fact, the layer configuration options are very sophisticated.
+You can create a net with many different types of layers, such as:
+*A vision layer.
+*A loss layer.
+*An activation layer.
+Each layer can perform a different function or take on a different role. This flexibility allows you to develop extremely complex deep nets for your application. Caffe is supported by a large community where users can contribute their own deep net to a repository known as the "Model Zoo". AlexNet and GoogleNet are two popular user-made nets available to the community. There are also a few educational demos and slides, so if you're going to use Caffe, it's a great place to start.
+Caffe vectorizes input data through a special data representation called a "blob". A blob is a type of array that speeds up data analysis and provides synchronization capabilities between a CPU and a GPU.
+
+--------------------------------------------------------------------------------------
+TensorFlow
+
+TensorFlow is a Python library that is a great choice for building commercial-grade applications that require deep learning. There is a lot of hype surrounding TF. The library grew out of an earlier Google library called "DistBelief", which is a propietary deep net library developed as part of the Google Brain Project. The project's team vision was to build a system that simplified the deployment of large-scale machine learning models onto a variety of different hardware setups - anything from a smart phone to single servers to systems consisting of 100s of machines with 1000s of GPUs.
+In essence, this library would improve the portability of machine learning so that research could be more easily applied to commercial-grade applications. Even though TensorFlow is only 6 months old, it's currently the most popular machine learning library on GitHub.
+Much like Theano library, TensorFlow is based on the concept of a computational graph. In a computational graph, nodes represent either persistent data or a mathematical operation and edges represent data transfer between nodes. The data that flows through these edges is a multi-dimensional array known as a tensor, hence the library's name: "TensorFlow".
+The output from one operation or set of operations is then fed as an input into the next. Even though TF was designed to support NNs, it can support any domain where computation can be modellled as a data flow graph.
+Like Theano, TF also adopts auto-differentiation, shared and symbolic variables, and common sub-expression elimination. It has comprehensive and informative documentation, in addition to a free massive open online course on Udacity as of March 2016.
+Different types of deep nets can be built using TensorFlow, although there is currently no support for hyper-parameter configuration. TF has a RoadMap that details ome upcoming features, and while hyper-p's are mentioned, there is no specific timeline for this feature's implementation. For now, TF users have to work with an additional libray called Keras if this flexibility is required.
+
+Right now, TF has a "no-nonsense" interface for C++, and the team hopes that the community will develop more language interfaces through SWIG, an open-source tool for connecting programs and libraries. Recently, Jason Toy of Somatic announced the release of a SWIG interface to Ruby for the summer of 2016.
+You may have noticed that TF and Theano share very similar patterns, but there are a few key differences.
+For example, TF has compile and run times several orders of magnitude more than Theano. The TF community has worked hard to combat these performance issues. Soumith Chintala of Facebook reguarly publishes updates on the performance of different libraries on GitHub; an update in April of 2016 showed that TF performed reasonably well in the ImageNet category, with no Theano-based libraries listed in the analysis.
+Another improvement over Theano comes in the form of parallelism. Theano based libraries support the training of a machine learning model on a distributed framework through the use of a two step procedure called Iterative Map-Reduce. The underlying concept, known as data parallelism, is implemented in a recent release known as distributed TensorFlow -v0.8. Data parallelism allows you to train different subsets of the data on different nodes in a cluster for each training pass, followed by parameter averaging and replacement accross the cluster.
+Version 0.8 also implements model parallelism, where different portions of the model are trained on different devices inparallel. For example, you could use model parallelism to train stacked RNNs by deploying each RNN on a different device.
+Even though most Deep Learning Libraries support CUDA, very few support OpenCL, a fast-rising standard for GPU computing. In response to a top community issue currently open on this topic, the TF team has added OpenCL support to the RoadMap. A nice feature is TensorBoard, a visualization tool for network architecture and performance. The tool allows you to zoom in and visualize different levels of the network, as well as view different summary-level metrics and changes over time throughout the training process. TF has achieved significant results in the world of deep learning in a very short period of time. If this trend continues Tensor Flow in track to become the premier library for building deep nets.
+
+--------------------------------------------------------------------------------------
+NOTES:
+
+Most of the examples of each of the lessons come from the book "Machine Learning: a Probabilistic Approach". I should take that into account when I read said book.
+This lesson is precursor to the TensorFlow course I'm going to start soon. However, the theoretical basis of this course is rather shallow.

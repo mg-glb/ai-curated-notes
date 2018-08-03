@@ -1,0 +1,452 @@
+Learning objectives:
+
+*How Statistical Modeling relates to Machine Learning and do a comparison of each.
+
+Algorithms and models:
+*Popular algorithms: Classification, Regression, Clustering, and Dimensional Reduction.
+*Popular models: Train/Test Split, Root Mean Squared Error, and Random Forests.
+-------------------------------------------------------------------------------------------
+Module 1 - Machine Learning vs Statistical Modeling & Supervised vs Unsupervised Learning
+Module 2 - Supervised Learning I
+Module 3 - Supervised Learning II
+Module 4 - Unsupervised Learning
+Module 5 - Dimensionality Reduction & Collaborative Filtering
+-------------------------------------------------------------------------------------------
+For review questions, you have only one shot at answering them correctly.
+The final exam is one hour long.
+You need 70% of all questions answered correctly to get the certificate.
+-------------------------------------------------------------------------------------------
+About the certificate
+The course rewards you with an online downloadable completion certificate.
+-------------------------------------------------------------------------------------------
+MODULE 1 - MACHINE LEARNING VS STATISTICAL MODELING & SUPERVISED VS UNSUPERVISED LEARNING
+
+This lesson is about:
+*Machine Learning Languages, Types and Examples
+*Machine Learning vs Statistical Modeling
+*Supervised vs Unsupervised Learning
+*Supervised Learning Classification
+*Unsupervised Learning
+
+-------------------------------------------------------------------------------------------
+Languages, Types and Examples
+
+Machine Learning is an algorithm that can learn from data without being reliant on standard programming practices. The purpose of machine learning is to make machines more self sufficient, insofar as they are able to analyze data and recognize patterns. One of the benefits of machine learning is that it can be used to automate processes and make them more efficient.
+Machine Learning Concepts include things such as ML Types, the correlation between ML and Statistical Modeling, and Model Evaluation.
+The most popular language for ML is Python, but R, Java, C++ and Haskell are popular as well.
+
+-------------------------------------------------------------------------------------------
+ML vs Statistical Modeling
+
+Machine Learning is a newer field of study than Statistical Modeling. ML is the field of Computer Science that creates systems that can learn from data without explicit programming. SM is the formaliztion of relationships between variables in the form of mathematical equations.
+
+-Terminology comparison
+*Networks/Graphs vs Models
+*Weights vs Parameters
+*Learning vs Fitting
+*Generalization vs TestSet performance
+*Supervised Learning vs Regression/Classification
+*Unsupervised Learning vs Density Estimation/Clustering
+
+-Characteristics comparison
+*Less Assumptions vs More mathematically based.
+*Subfield of Computer Science vs Subfield of Mathematics.
+*Uses algorithms vs uses equations.
+*Ranges from small sets of data to large ones vs only uses small sets of data.
+*Minimal human effort vs considerable human effort.
+*Strong predictive ability vs Best Estimate.
+
+-------------------------------------------------------------------------------------------
+Supervised vs Unsupervised Learning
+
+Supervised Learning is to observe and direct the execution of the learning process of a model. To teach the model, we feed it with a labeled dataset.
+The two main applications of Supervised Learning are Classification and Regression.
+
+Unsupervised Learning draws conclusion from unlabeled data. This is because we don't know the data we are working with. The algorithms of UL, are typically harder than those of SL. The main applications of UL are the determination of clusters, density estimation, and dimensionality reduction.
+
+The differences between the two types of Learning are:
+*Use of labeled vs unlabeled data.
+*Large number vs small number of tests.
+*Large amount of control vs small amount of control of the result.
+
+-------------------------------------------------------------------------------------------
+Supervised Learning Classification
+
+Classification is the process of categorizing data. The main goal of ML in Classification is to learn the boundaries between categories of data. Therefore new data can be put into one of the categories we have learned. All classification algorithms have this behavior. An example is K-Nearest-Neighbors.
+-------------------------------------------------------------------------------------------
+Unsupervised Learning
+
+UL usually deals with algorithms that use Centroids. Examples are K-means Clustering, Hierarchical Clustering and Density-based Clustering. In music categorization, Dimensionality Reduction is used.
+
+-------------------------------------------------------------------------------------------
+MODULE 2 - SUPERVISED LEARNING I
+
+This lesson is about:
+*K-Nearest-Neighbors
+*Decision Trees
+*Random Forests
+*Reliability of Random Forests
+*Advantages & Disadvantages of Decision Trees
+
+-------------------------------------------------------------------------------------------
+K-Nearest-Neighbors
+
+The KNN is an algorithm used for both classification and regression. It uses the k nearest neighbors to calculate the value of a point.
+*In classification, the ouput is the class of the object of interest.
+*In regression, the output is an average of the values of the target variable.
+
+Classification KNN
+1-Pick a value for K (a positive integer).
+2-Using a distance value, get the K nearest points of data to the unclassified object.
+*For continuous variables, the distance is the euclidean distance.
+*For other variables, you will have to use either the Large Margin Nearest Neighbor or Neighbourhood Components Analysis techniques.
+3-Predict the response of the unknown data point using the response of the "most popular" class within the K selected objects.
+
+C-KNN problems:
+*Overfitting: If a very low value of K is selected, then the separation line is very complex and captures a significant amount of noise caused by the training data. This is called Overfitting. The reason why this is bad, is because we want our model to work not just with the training data, but with any data.
+*Underfitting: If a very high value of K is selected, then many of the values inside the sample data cannot be determined. This creates a zone of indetermination. This effect is called Underfitting.
+
+This means that when selecting a "good" value of K, these things will happen:
+*The classes are separated accurately by the termination line.
+*There are no regions of noise within the classes.
+*The area of indetermination will match the termination line.
+
+Out of sample data:
+This is data that is outside the dataset used to train the model. The implications of out of sample data is that it might produce results that might not be not accurate.
+
+Regression KNN
+This is used to determine the outcome of a dependent variable, given a set of independent variables. Take for example a case where y=3*x^2: imagine that we want to know the value for x=5.6. If K=1, then the closest value is 6. So y(5.6)=108. If we use K=2, instead, we will get (y(6)+y(5))/2=(108+50)/2=79
+
+Weighted KNN
+In this algorithm, a weight is assigned to each near point, depending on its distance to the query point. The closer the points are, the larger the weight is. The sum of all weights must be one.
+
+-------------------------------------------------------------------------------------------
+Decision Trees
+
+Decision trees are built by splitting the training set into distinct nodes. Each node contains contains all of or most of one category of the data. These categories are called subsets. Out of sample data, when falling into one of the categories, will be classified into the subset.
+
+DT Terminology:
+*Node: A test for the values of certain attribute. The goal of the node is to split the dataset on an attribute.
+*Leaf: A terminal node that predicts the outcome.
+*Root: The beginning of the tree that contains the entire dataset.
+*Entropy: The amount of randomness in the tree. Each node has a particular amount of entropy, and it depends on the amount of randomness of the node.
+*Information gain: Information collected that can increase the level of certainty in a particular prediction. Entropy and Information Gain are inversely related.
+
+If a split reduces entropy in a dataset, then information is gained.
+
+Classification is done by means of a histogram. When a point reaches a leaf, a histogram is made with all classes that compose the leaf.
+
+A note to take from here is that Decision Trees do not work well with very large datasets and/or sets with a large number of attributes.
+
+-------------------------------------------------------------------------------------------
+Random Forests
+
+A Random Forest is a collection of Decision Trees created after a random split in the dataset.
+Look at the Random Forest Algorithm:
+
+1-First define Bootstrapping:
+*Bootstrapping is the process of selecting N random data points with replacement from a dataset. (NOTE: If this is done B times, then some points may be selected more than once, while others might get selected not one time)
+2-Given a training set X={x1,x2....xn} and a response set Y={y1,y2...yn}, bagging repeatedly B times, bootstrap N data points each time and assign it to each tree.
+3-Grow each tree using the bootstrapped data, by recursively repeating each of the following steps for each terminal node of the tree, until the mininum node size Nmin is reached:
+3-a-Pick m variables at random from the p variables.
+3-b-Pick the best variable/split point from the m.
+3-c-Split the node into two daughter nodes.
+4-Output the ensemble of trees Tb|1toB
+
+Analyzing this, we observe that:
+*There are two sources of randomness: randomness in the data and randomness in the feature splits.
+*B, m and p are constant throughout the entire algorithm. This means that even though the algorithm is random, its parameters are not.
+
+Why have random forests?
+*They are good for large datasets with several attributes. If, out of such dataset, we wanted to create a single tree with binary splits, we would end up with a gigantic tree that would take a lot of time to build.
+*Random Forests allow the dataset to be split into many machines, each computating a different tree.
+*They key thing here is that averaging the result of the trees produces a Forest Result that is accurate (NOTE: This might not be the case with KNN). The averaging of the trees is called Bagging.
+
+-------------------------------------------------------------------------------------------
+Reliability of Random Forests
+
+A decision tree might not produce an optimal tree, since it uses a greedy algorithm to build it. However, random forests may produce the optimal tree. This is because each unknown datapoint is passed through each tree, and the forest class is the average of the classes that are output by each tree.
+
+Trees that are too deep tend to overfit the data, therefore having low bias and high variance. With forest averaging, variance is reduced significantly, while bias is increased lightly.
+
+-------------------------------------------------------------------------------------------
+Advantages and disadvantages of Decision Trees
+
+Advantages:
+*Easy to understand and requires little data preparation.
+*Logarithmic run time.
+*Easy to check the accountability of the model using statistical tests (entropy and information gain tests).
+
+Disadvantages:
+*It is relatively easy to create a tree that overfits the data.
+*Small variations in data can create very different trees.(NOTE: This can be solved with random forests)
+*Since the tree uses a greedy algorithm, it rarely produces an optimal tree.
+
+-------------------------------------------------------------------------------------------
+Installation steps for KNN, Decision Trees and Random Forests from sklearn.
+
+1-Install python.
+2-Clone https://github.com/nlhepler/pydot.git 
+3-Inside that repo, run python setup.py install.
+4-Go to http://www.graphviz.org and download graphviz for your OS.
+a-Windows: Download the msi and install.
+*Wherever your graphviz installation is, copy it to the environment variable GRAPHVIZ.
+*Make sure that the PATH variable is pointing to %GRAPHVIZ%\bin
+b-Unix: Run:
+$sudo add-apt-repository ppa:gviz-adm/graphviz-dev
+$sudo apt-get update
+*The path variable should be automatically updated in this case.
+5-Do pip install pydot
+6-Do pip install pydotplus
+7-Do pip install sklearn
+
+-------------------------------------------------------------------------------------------
+MODULE 3 - SUPERVISED LEARNING II
+
+This lesson is about:
+*Regression Algorithms
+*Model Evaluation
+*Model Evaluation: Overfitting and Underfitting
+*Understanding different Evaluation Models
+
+-------------------------------------------------------------------------------------------
+Regression Algorithms
+
+Regression originated from Statistical Modeling. Being a successor field, Machine Learning has adopted Regression Analysis.
+Regression outputs a response that is ordered and continuous. There are many types of regression:
+*Polynomial(linear,parabolyc, and so on).
+*Logarithmic.
+*Exponential.
+
+It is important to pick a type that fits your data the best. Regression is able to create and use a trend line that fits the data points that are present. Following the trend line is what is used to create a prediction.
+
+Pros of LinReg
+*Easy to understand
+*Fast to compute and tune
+
+Cons of LinReg
+*High variability on predictive accuracy.
+
+Linear Regression uses past data to predict the trend of future data. It produces continuous output, in contrast with KNN, that produces a discrete output.
+
+To evaluate a regression, there are three methods:
+*Mean Average Error(MAE)
+*Mean Square Error(MSE)
+*Root Mean Squared Error(RMSE)
+
+Special types of regression methods are:
+*Support Vector Machine(SVM)
+*Least Squared Regression
+*Logistic Regression
+-------------------------------------------------------------------------------------------
+Model Evaluation
+
+You will want to choose an evaluation model that most accurate results. The three most efficient methods for evaluation are:
+
+*Train and Test on same set.
+*Train/Test split.
+*Regression Evaluation Metrics.
+
+Train and Test on same set: When you use this method, you already know the classification of the entire data set. So, it would have high training accuracy and low out-of-sample accuracy. Training accuracy is the % of correct predictions based on the training data set. This might not be a good thing, since it might cause overfitting of the model. Out of sample accuracy is the % of correct predictions based on the test dataset. it is important that the model has a high out-of-sample accuracy.
+Train Test Split method splits the data set into two parts: One is used as training, and the other is used as testing set. This method should have a higher out-of-sample accuracy than Train and Test on Same Set. An advantage is that we know the classification of the test set. However there is the problem that is dependent on what part of the dataset is used as training set. Also a high number of outliers in the test set can upset the result of the classification.
+K-Fold-Cross Validation: It is used to solve high variation resulting from a dependency of the training data. It solves this problem by averaging the results. This method performs several Train/Test splits, each time changing the shape of the split. At the end the result is averaged to give a more accurate result.
+
+-------------------------------------------------------------------------------------------
+Overfitting & Underfitting of models
+
+Bias is the error that results from incorrect assumptions and relations that the model makes about the data. In statistics and probability theory bias occurs when the expected value of an estimator differs from the true underlying parameter which is being estimated. High bias tends to create overly generalized models, which cause a loss of relevant relations between the features and the target output.
+
+When a model has high bias, we say that it underfits the data.
+
+Variance is the inconsistency of the model due to small changes in the data set. In statistics and probability, variance is the squared deviation of a random variable from its mean. It can also be defined as the spread between numbers in a dataset and their mean. If a model changes drastically due to minor modifications, then it is said to have high variance.
+
+When the model has high variance, we say that it overfits the data.
+
+We want our model to be generalized enough to produce the best predictability on out of sample data.
+
+Error in bias=Difference in model prediction
+Error in variance=Variability in model prediction
+
+A balanced model is one that is general enough to predict out-of-sample data, but specific enough to fit the pattern of the data.
+-------------------------------------------------------------------------------------------
+Understanding different evaluation models
+
+Regression metrics: MAE, MSE and RMSE. In the context of regression, error is the difference between the data points and the trend line generated by the algorithm. Since there are many data points, there are many ways to define the error.
+MAE is the mean of the absolute errors of the data points. This model is easy to understand and compute, as no squaring is involved.
+MSE is the mean of the squares of the absolute errors of the data points. This model is popular, since it magnifies large errors, rather than it compounds small errors.
+RMSE is the variance of the aboslute errors of the data points. This model is the most popular, as it is expressed in the same units as the output, thus making it easy to relate the two values. Take note, however that this is harder to compute than other metrics.
+
+Remembering the classification metrics, we had:
+
+*T&T on same data: Easier, but increases bias, therefore producing overfitting.
+*T/T split: Faster, but increases variance, therefore producing underfitting.
+*K-fold Cross Validation: More accurate, but slower.
+
+-------------------------------------------------------------------------------------------
+MODULE 4 - UNSUPERVISED LEARNING
+
+*K-Means Clustering plus advantages and disadvantages.
+*Hierarchical Clustering plus Advantages & Disadvantages 
+*Measuring the Distances Between Clusters - Single Linkage Clustering
+*Measuring the Distances Between Clusters - Algorithms for Hierarchy Clustering 
+*Density-Based Clustering
+
+-------------------------------------------------------------------------------------------
+K-Means Clustering
+
+Clustering is a type of unsupervised learning, since it can group unknown data with the use of algorithms. Clustering is used to determine trends and patterns in sets of unlabeled data and usually group sets of data together by using a centroid and distances from the centroid to other points.
+
+1-K Centroids are initialized randomly.
+2-The data is then grouped with the centroid based on distance.
+3-The centroid moves to the average distance of all points to the centroid.
+4-The points are re classified and the centroids move again.
+5-When the centroids no longer move, stop.
+
+How to do it with two centroids?
+
+*Place the two anywhere.
+*Draw the segment that separates them.
+*Draw the perpendicular line to that segment.
+*Elements to one side of the perpendicular line are grouped with the first centroid. The half on the other side is grouped with the other centroid.
+*For the two centroids, calculate the distance to each one of its group members.
+*Move the centroids to the point of minimum average distance to its corresponding group.
+*Repeat previous steps until no points change.
+
+Advantages:
+*Easy to understand.
+*Very fast compared to other algorithms.
+
+Disadvantages:
+*No specified initialization of clustered points.
+*High variation of clustering models, based on initialization points.
+*Results depend on distance measuring metrics.
+*Possibility of centroid lacking data for updates.
+
+-------------------------------------------------------------------------------------------
+Hierarchical Clustering plus Advantages & Disadvantages 
+
+There are two types of HC. Divisive and Agglomerative. Divisive is top down, you start with all observations from a large data set and break it down to smaller clusters.  Agglomerative is bottom up, you start with various small clusters and you merge them as you move up the hierarchy.
+Use dendograms to measure hierarchical groups. The taller the bar, the higher the distance between two groups. Also use proximity matrices to measure the distance of each cluster to all others.
+
+Advantages:
+*Doesn't require number of clusters specified at the beginning.
+*Easy to implement.
+*Produces a dendogram, which helps with the understanding of the data.
+
+Disadvantages:
+*Can never undo previous steps throughout the algorithm.
+*Has a long run time (ie. Agglomerative Clustering has a run time of O(n^3))
+*Sometimes difficult to identify the number of clusters by the dendogram.
+
+-------------------------------------------------------------------------------------------
+Measuring the Distances Between Clusters - Single Linkage Clustering
+
+Single Linkage Clustering is the use of the minimum distance to measure clusters.
+SL = min{d(a,b): aEA and bEB}
+When having multiple clusters, we use the proximity matrix to measure their distances. But what if each cluster consist of multiple points resulting from the merges of smaller clusters?
+Complete Linkage Clustering is the use of the maximum distance to measure clusters.
+CL = max{d(a,b): aEA and bEB}
+Average Linking Clustering is the use of the average distance to measure clusters.
+Centroid Linking Clustering is the use of the centroid distance to measure clusters.
+
+-------------------------------------------------------------------------------------------
+*Measuring the Distances Between Clusters - Algorithms for Hierarchy Clustering
+
+Agglomerative Clustering Algorithm
+1-Create n clusters. Each cluster for each point.
+2-Compute the proximity matrix.
+3-Repeat
+  a-Merge the two closest clusters.
+  b-Update the proximity matrix.
+4-Until only a single cluster remains.
+
+Note: Remember that different linkage criteria determine different algorithms.
+
+Divisive Clustering Algorithm
+1-Start with all data points on one cluster.
+2-At each step, remove the outsiders from the least cohesive cluster.
+3-If each step is in its singleton cluster, stop. Else go to two.
+
+k-means Divisive Clustering Algorithm
+1-Run K-Means Clustering on the data.
+2-For each of the resulting clusters, run k-means algorithm until the clusters cannot be broken any further.
+
+Run time is O(K logk(n)).
+
+Nearby points may be separated into different clusters, as there is no merging.
+
+-------------------------------------------------------------------------------------------
+Density-Based Clustering
+
+Density based clustering is also knows as DBScan or "Density Based Spatial Clustering Applications with noise". It works by defining a cluster as the maximal set of density connected points.
+
+There are two parameters e(epsilon), which is the maximum radius of the neighborhood, and the minimum number of points in the neighborhood defined by e to define a cluster.
+
+There are three classifications for points. Core, border and outlier.
+*A core point has at least minimum points on its neighborhood (including itself). A cluster point is at the interior of the cluster.
+*A border point has less than minimum points on its neighborhood, but it can be reached from the core of the cluster. That means, that it is in the neighborhood of a core point. An outlier is a point that cannot be reached by a cluster.
+
+Density Reachability:
+*A point y is said to be reachable from x if there is a path p1,p2...pn with p1=x and pn=y such that every p(i+1) point is a core point, with the exception of pn.
+*An object y is directly density reachable from object x, if x is a core object and y is in x's direct epsilon-neighborhood.
+
+DBScan Algorithm
+1-Pick a random point that has not yet been asigned to a cluster or designated as an outlier. Determine if it is a core point. If it is not. It is an outlier.
+2-If the point found is a core point, add all of its directly reachable points to the cluster. If an outlier has been found, label it as a border point.
+3-Repeat until all points have been assigned to a cluster or have been defined as border points.
+
+Difference between K-Means and Density based Clustering
+In this case, DBScan can detect noise much better than K-Means. It might also identify clusters much better than K-Means.
+
+-------------------------------------------------------------------------------------------
+MODULE 5 DIMENSIONALITY REDUCTION & COLLABORATIVE FILTERING
+
+*Dimensionality Reduction: Feature Extraction and Selection
+*Collaborative Filtering & It's Challenges
+
+-------------------------------------------------------------------------------------------
+Dimensionality Reduction
+
+Dimensionality Reduction is the process of reducing variables in review. DR can be divided into two subcategories:
+
+*Feature Selection (Wrappers, Filters,Embedded)
+*Feature Extraction (Principal Component Analysis)
+
+Feature Selection, consists of selecting the relevant features to your problem, and leaving the irrelevant ones out.
+Feature Extracion, consists of making several variables into less than the original number.
+
+Wrappers use a predictive model that scores subsets based on the error rate of the model. While they are computationally intensive, they usually select the best selection of features. A popular technique is Stepwise Regression. It is an algorithm that selects the best feature and eliminates the worst at each iteration.
+
+Filters use a proxy measure which is less computationally intensive, but slightly less accurate. So it might have a good prediction, but still not the best.
+Filters do capture the practicality of the dataset but, in comparison to error measurement, the feature set that's selected will be more general than if a Wrapper was used.
+An interesting fact about filters is that they produce a feature set that doesn't contain assumptions based on the predictive model, making it a useful tool for exposing relationships between features, such as variables that are "Bad" together and as a result, drop them, and variables that are "Good" together, and as a result use them to raise the accuracy of the model.
+
+Embedded Algorithms learn about which features best contribute to an accurate model during the model building process. The most common type of algorithm is called a regularization model.
+
+Feature Extraction is the process of transforming or projecting a space composing of many dimensions into a space of fewer dimensions. This is similar to representing data in multiple dimensions to ones that are less. This is useful when you need to keep your information but need to reduce the resources used to make computations. The main linear technique is called Principal Component Analysis.
+
+Principal Components Analysis is the reduction of highter vector spaces to lower orders through projection. It can be used to visualize the dataset through compact representation and compression of dimensions.
+
+An easy representation of this would be the projection from a 3-dimensional plane to a 2 two axes plot. When the projection is made, the new axes are created to describe the relationship. These are called principal axes. And the data are called principle components. This data is more compact and thus, easier to work with.
+
+-------------------------------------------------------------------------------------------
+Collaborative Filtering & its Challenges
+
+Collaborative Filtering techniques explore the relationship that exists between products and people's interests. Many recommendation systems also called recommender systems, use Collaborative Filtering to realize these relationships and to give an accurate recommendation of a product that the user may like or enjoy.
+Collaborative Filtering bases these relationships from choices a user makes when buying, watching or enjoying something. Then makes connections with other users of similar interests to make a prediction.
+The advantages of Collaborative Filtering is that users get a broader exposure to many products they might be interested in. This exposure makes users more likely to use the service more frequently.
+
+Challenges:
+*Data Sparsity: Data is so large that is quite slow.
+*Cold start: At the beginning, users do not have enough ratings to give an accurate recommendation.
+*Scalability: As users and data increase, volume increases exponentially.
+*Synonyms: Same product labeled differently.
+*Gray Sheep: Users whose preferences do not fit or are alike any other grouping. 
+*Shilling attacks: Abuses of the system in which low valued products are recommended even though, no one wants them.
+*Lack of diversity=>Long tail effect.
+
+-------------------------------------------------------------------------------------------
+Support Vector Machines
+
+The purpose of this little lesson is because we have a task talking about svm's in the Lab. Basically the svm algoritm assigns new examples to one category or other, making it a non-probabilistic binary linear classifier.
+The key thing about SVMs is that an SVM model is a representation of the examples as points in space, mapped so that the examples of the separate categories are divided by a clear gap that is as wide as possible. New examples are then mapped into that same space and predicted to belong to a category based on which side of the gap they fall.

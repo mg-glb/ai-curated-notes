@@ -1,0 +1,427 @@
+DEEP LEARNING WITH TENSORFLOW
+=============================
+
+This course is designed to teach you how to use TF to build Deep Learning applications. 
+*In module 1, we will go with small classification and regression exercises.
+*In module 2, we will cover Convolutional Networks - including a detailed description of the convolution operation.
+*In module 3, we will cover Recurrent Networks, which are used to process sequential data. In that saame module, we will cover the long-short memory model (something related with MRFs?).
+*In module 4, we will be introduced to unsupervised learning. Our main focus will be on the Restricted Boltzmann Machine, and how to build it using TF.
+*In module 5, we will expand on the concept of Autoencoders, models that are used to detect patterns in unlabeled data. Finally we will also see an implementation of a Deep Belief Network.
+
+That is actually a very accurate description of the syllabus.
+
+----------------------------------------------------------------------------------------
+Module 1: Introduction to TensorFlow
+
+This module is about:
+*Tell you what the library is about.
+*Linear, Nonlinear and Logistic regression with TF.
+*Activation Functions
+
+----------------------------------------------------------------------------------------
+Introduction to the library
+
+It is an open source library made by Google. Originally created for tasks that required heavy numerical computation, it ultimately geared towards machine learning and deep network implementation. It runs faster than other Python libraries, due to its C/C++ implementation. Its structure is based on the Data Flow Graph model.
+A Data Flow Graph has two basic units. A Node represents a mathematical operation, and an edge represents a multidimensional array, known as a tensor. The standard usage is to build a graph and then execute after the session is created, by using the 'run' and 'eval' operations. There is an option to run the session on demand.
+once the graph is built, an inner loop is written to drive computation. Inputs are fed into nodes through variables or placeholders. The graph will only run after the creation of a session. TF's flexible architecture allows to deploy computation on one or more CPUs or GPUs, or in a desktop, server or even a mobile device. All of this can be done while only using a single API.
+TensorFlow comes with an easy to use interface to build and execute your computational graphs. It's easy to play around and learn about machine learning using the Data Scientist Workbench (DSWB). You can scale up and develop models faster with different implementations.
+TensorFlow is suited for deep learning applications, because it has built-in support for deep neural networks, so it's easy to assemble a net, assign parameters and run the training process. TF also has a collection of simple, trainable mathematical functions that are useful for neural networks. Any gradient-based machine learning algorithm will benefit from TF's auto-differentiation and suit of first-rate optimizers. Finally, TF is compatible with many variants of machine learning.
+
+Deep NNs are capable of much more complex behavior than shallow ones. Each node processes its input using an activation function. There are many activation functions, such as the binary step, the Hyperbolic Tangent, and the logistic function. The choice of activation function has a big impact on the network's behavior. TensorFlow provides a lot of flexibility over the network's structure.
+TF can be used to take a set of points and apply linear regression. And if a line isn't suitable for your data, you can use TF to  build non-linear models as well. If you need to perform classification you can easily implement logistic regression.
+
+----------------------------------------------------------------------------------------
+TensorFlow's Hello World application.
+
+Now we will learn how to create a simple TF project. Remember that TF can be used in Android Applications, as well as multi-GPU systems. In Python:
+
+import tensorflow as tf
+
+#Create two nodes, a and b. Each of these nodes contains a constant tensor of dimension 1.
+a=tf.constant([2,,2])
+b=tf.constant([3,3])
+#Now let's create a new node, which will add the values of the nodes a and b.
+c=tf.add(a,b)
+
+#When you create a session, you are telling TF that you want to compute things.
+session=tf.Session()
+result=session.run(c)
+print(result)
+#Close the session to save space
+session.close()
+
+#Looking from a graph theory perspective, what we are doing here is to go through the graph, resolve nodes a and b,
+# go to the node c by means of the edges, and then resolve node c. The result variable is the exiting edge of the graph.
+
+#Notice that we can avoid opening and closing sessions, using the with notation.
+with tf.Session() as session:
+  result = session.run(c)
+  print(result)
+
+
+Remember to check the method tf.device() to check how TensorFlow works. Also remember to go to the lab, so you can see things for yourself.
+
+----------------------------------------------------------------------------------------
+Tensors, Variables and Placeholders
+
+The word tensor comes from new Latin, and it means "that which stretches". It is called like that because an early application of tensors was the study of materials stretching under tension. The contemporary meaning of tensors can be taken as multidimensional arrays.
+Tensors are useful, because they give us the freedom to shape the dataset the way we want. This is particularly helpful with images, as they are easily encodable to tensors.
+
+Variables are objects within TensorFlow that you can modify at runtime. The catch is that you have to initialize them before using them. Do so by means of the tf.global_variables_initializer() function.
+
+Placeholders are "holes" in the model. These holes can be filled with data that is not part of the tensorflow structure. You can do so, by using the feed_dict dictionary. A list of active types is available at the lab. An important thing about placeholders is that we have to know the shape of the data.
+
+NOTE: At this moment, I'm doing all of lab exercises in the cloud. I should take some time and redo them in my local Python environment. And even more so, I should definitely start looking at the math of all this. It should not take me so much time. Also, I need to read more carefully the logistic regression part, as the gist of the lab session seems to be that as time and training iterations pass, the probability of a point being classified increases.
+
+Logistic Regression is a variation of Linear Regression. It is used when the observed dependent variable is categorical (that is non-numeric).It produces a formula that predicts the probability of the class label as a function of the independent variables. In our case, the input value of this function is the weighted sum of the independent variables. That means that we will have to provide the array W as a parameter.
+
+In mathematical terms, the logistic regression is a function:
+
+theta(y)=exp(y)/1+exp(y)
+
+where y is y=WX, and W=[w1,w2,w3..wn],X=[x1,x2,x3..xn].
+Much like Linear Regression, Logistic Regression uses a shared variable weight matrix and a bias vector. In this case however, it is possible to initialize the tensor as a null one.
+I still cannot get why we are embedding a linear function inside a sigmoid function.
+
+Activation Functions: These are the functions that trigger neurons inside a network. Basically, the neuron recieves the inputs and the activation function transforms that into a function. There are the step functions, the sigmoid functions and the linear unit functions.
+-It is important to note that tensor flow doesn't have a step function (mostly because it is unnecessary).
+-The sigmoid functions, are variants of the logistic function in TensorFlow, the corresponding function is tf.sigmoid(). -Another activation function is the arctangent, arctan(x). Tensorflow once again, does not have an implementation of this function.
+-The hyperbolic tangent , tanh(x) is one of the favorite sigmoid functions in TensorFlow.
+ It is defined by (2/(1+exp(-2x)))-1. In TensorFlow, the implementation is tf.tanh(x)
+
+Linear Activation Functions are functions that before the zero value, the function is flat. After the zero value, the function behaves as a line. Some examples are:
+-RELU, which takes care of the Vanishing and Exploding Gradients in an effective manner. In TensorFlow, the function is called tf.nn.relu()
+
+----------------------------------------------------------------------------------------
+Module 2: Convolutional Networks
+
+This module is about:
+*Introduction to Convolutional Networks.
+*Convolution and Feature Learning.
+*Convolution with Python and TensorFlow.
+*The MNIST database.
+*Multilayer perceptron with TensorFlow.
+*Convolutional Network with TensorFlow
+
+----------------------------------------------------------------------------------------
+Introduction to Convolutional Networks
+
+This type of network, is used for a plethora of things. But its main application is object recognition. Historically, the purpose of Machine Learning, was: "To move humanity closer to the unreachable goal of General Artificial Intelligence. However, this goal proved to be loafty, so now lead developers focus on key tasks. For CNNs, this is broken down into four steps:
+1-Image input
+2-Primivite Features
+3-Object Parts
+4-Object output
+
+For example, if you gave a CNN a picture of a building, it would first detect that there are vertical and horizontal lines. Then it would detect that these lines converge into a box and a grid. Finally it would know that there is a building in that picture.
+
+----------------------------------------------------------------------------------------
+Convolution and Feature Learning
+
+In this lesson, we will provide a high level description of the Convolution Operation without digging so much into mathematics. We will also see how a CNN extract features.
+When you first learned to code, one of the things you did to improve the development process is to build and apply functions. Functions allow you to reuse important pieces of code in different parts of a program, which keeps things organized and concise. This analogy can be extended to Vector Graphics and Computer Aided Design software. These programs will create and process the first object, but for all the remaining instances, they just need to store basic information, like position and rotation.
+CNNs use a special type of network structure that allows this type of reasoning. The network will contain multiple copies of the same neuron, and all of the neurons share the same weights, biases and activation function. As a result, the neuron can be reused in different parts of the input. Traditional neural networks use a fully connected layer, where each enuron in a layer is connected to every neuron in the previous layer.
+Each of these connections also has its own unique weight. This type of connection is general purpose, so it makes no assumptions about the features in the input data. But it also tends to be expensive in terms of memory and computation. A convolutional layer works a bit differently. Each neuron is only connected to a few nearby local neurons in the previous layer, and the neurons share the same weights and biases.
+This only makes sense when the data is spatial, and has local features that can be extracted. So, for an image, it would make sense to apply a small window around a set of pixels, in order to look for some image feature. By using the same weights, the net assumes that the feature is equally likely to occur at every input position. That means that the window can search all over the image, and can be rotated and scaled.
+
+Feature engineering is the process of extracting useful patterns from the input data inorder to help the predictive model understand the true nature of the problem. Finding the right features can improve an algorithm's accuracy and performance beyond what a machine learning model could do on it's own.
+A feature learning algorithm will determine which features are useful for distinguishing between different classes. After this process is complete, the extracted features are ready to be used for clasification or even regression.
+CNNs are exceptionally good at not only finding features, but combining them together to increase the complexity of the patterns. The final layers of a CNN use these generated features for the task at hand. So if you aren't an expert in feature engineering, CNNs are a great tool since they do a lot of the work automatically.
+You can use kernels as a substitute of CNNs, but they are a lot more complex. The type of kernel we would need is the type that is used to detect edges in an image. Edges are important, because they can be used to build up higher-level patterns.
+
+Let's go to the example: the kernel we are going to use is the convolved matrix:
+kernel=[[1,0,1],[0,1,0],[1,0,1]].
+The example image we will use is a 5x5 matrix:
+image=[[1,1,1,0,0],[0,1,1,1,0],[0,0,1,1,1],[0,0,1,1,0],[0,1,1,0,0]]
+The process of convolving the image consists of multiplying the kernel element-wise with the upper-left part of the image, and then sum-up the result. Now move one column right and repeat. When you are finished moving right, move one down, and go back to the left. Repeat these steps up until you arrive at the bottom right part of the image.
+In our example, you should have a 3x3 convolved matrix
+conv=[[4,3,4],[3,4,3],[2,3,4]]
+This example helps us see the small mechanics of convolution, in a way that does not required going to the actual definition of convolution - which we will actually have to go back at some point, that is the integral definition of f*g.
+If you choose other types of kernels, you will get different types of effects on images. For example, you can try blurring kernels (which make an image more diffuse) or edges kernels (which will sharpen the image).
+
+----------------------------------------------------------------------------------------
+Convolution with Python and TensorFlow.
+
+Now it's time to use Python to demonstrate the convolution operation. We will first go with two 1-D arrays. We will verify the result using the convolution equation - so we will see a reduced math complexity version of it. For the first example, we will use a pure mathematical notation. As the kernel slides across the array, we can pad the array with zeros. This has an important effect in certain an example. Notice the position of the dash. This is where we'll append a zero to the array for convolution. We're also going to invert the filter 'x'. Otherwise we'd be performing an operation known as cross-correlation.
+
+Visually understanding the operation with no padding:
+Sometimes you'd want to perform dimensionality reduction, in which case you'd want the resulting array to be smaller. In that case, you can perform the operation without padding the array with zeros. When dealing with images, you'd first want to take them using Numpy. numpy has a C/C++ backend to implement things.
+But to work with Deep Learning, NumPy typically isn't enough. The reason for this, is because we use tensors instead of vectors and matrices. TensorFlow performs the same operations, but instead of relying heavily on Python, it creates graphs for the operations and executes them only once with a highly optimized backend.
+For example, let's say we have two tensors: a 3x3 filter, and a 10x10 image. -With zero padding, the output size will be the same as the input, which is 10x10. This is known as the 'SAME' mode.
+-Without zero padding, the output size would be the input size, minus the kernel dimension plus one. This is known as 'VALID' mode, and in our case, the resulting dimensions being 8x8.
+
+Remember in the first example, we had a 5x5 image against a 3x3 filter. So, the output dimension would be 5-3+1=3 which is what we actually got.
+In the lab, you have a small piece of code you can use to process images using some filters - you can even upload your own pictures! If we start changing the kernel and analyze the outputs, we'd be doing what a convolutional neural network does automatically. Changing the weights and biases will affect the behavior of the feature maps. It's important to note that a CNN typically maps the pixel values into the range from 0 to 1, in a process called normalization.
+
+Now, go to the lab!
+-------------------
+Image you have the following vectors:
+h = [2,1,0]
+x = [3,4,5]
+
+Now imagine h laying in the integer field, with the first element at zero. Now imagine that x is inverted, and is moving through time through the integer field. Each time one unit of time passes, the coinciding values of h and x are multiplied, and then x is moved right one unit: 
+
+t=0
+Field:-2,-1, 0, 1, 2
+h:           2, 1, 0
+x:     5, 4, 3
+h*x(t):      5      =5
+t=1
+Field:-2,-1, 0, 1, 2
+h:           2, 1, 0
+x:        5, 4, 3
+h*x(t):      8, 3   =11
+t=2
+Field:-2,-1, 0, 1, 2
+h:           2, 1, 0
+x:           5, 4, 3
+h*x(t):     10, 4   =14
+t=3
+Field:-2,-1, 0, 1, 2, 3
+h:           2, 1, 0
+x:              5, 4, 3
+h*x(t):         5      =5
+t=4
+Field:-2,-1, 0, 1, 2, 3, 4
+h:           2, 1, 0
+x:                 5, 4, 3
+h*x(t):            0      =0
+
+When h and x no longer coincide, the algorithm stops. All the resulting values are ordered by time:
+h*x=[5,11,14,5,0]
+
+Note that it was x who was moving, so in image processing x would be the kernel.
+
+Full Zero Padding: When the filter starts the exit the image, some of its elements no longer coincide with elements of the image. With zero padding, what you do is to multiply those values with zeros. As a result, you get a result that is equal in size to the original image.
+Same Zero-Padding: In this case, we only add zeros to the left of the image vector. That means that when the filter starts exiting the image from the right, the process stops. As a result, the output is less than the image.
+Valid: In this case, we only multiply where the filter and the image coincide fully.
+
+That was an interesting case of how to explain Convolution to the laymen. I should get this type of explanations more often. As you can see in the example, you can also create two dimensional (even three dimensional) operations with Numpy.
+
+The problem arises when you start using tensors (4 or more dimensions)
+
+----------------------------------------------------------------------------------------
+The MNIST Database
+
+This dataset contains a large set of handwritten digits. It is useful to create deep learning applications. To train the model, some of the digits have the corresponding label attached to it.
+The dataset has about 60,000 samples for training, and 10,000 ones for testing. The dataset is highly normalized and centered. So each digit is centered in a fixed-size image.
+The 'One-hot=True' argument means that the label for each digit will have one, distinct bit turned on. For example, in normal binary, 5 would be represented by 101, whereas in One-Hot encoding, you would have it represented as 100000.
+So, for example, when the NN analyzes a digit, it can observe the corresponding label in order to improve its predictions.
+From the training data, we also reserve 5,000 data points for a validation set. The validation set is used to generate model properties, like classification error, for example.
+It's also used to determine the optimal number of hidden units or the stopping point of the back-prop algorithm. The 10,000 point set contains data that the model never saw during training. It's used to evaluate the model's performance on unfamiliar data.
+
+This is how a CNN would be composed of:
+0-Input MNIST dataset.
+1-Convolutional and max-pooling.
+2-Convolutional and max-pooling.
+3-Fully Connected Layer.
+4-Processing Dropout.
+5-Readout Layer - Fully Connected
+6-Outputs - Classified Digits
+
+----------------------------------------------------------------------------------------
+Module 3 - Recurrent Neural Networks
+
+This module is about:
+*The sequential problem.
+*The Recurrent Neural Network Model.
+*The Long Short-Term Memory Model.
+*Applying Recurrent Networks to Language Modeling.
+
+----------------------------------------------------------------------------------------
+The Sequential Problem
+
+We will provide an overview of sequential data, and explain why it poses a problem for traditional Neural Networks. Whenever the points in a dataset are dependent on other points, the data is said to be sequential. A common example of this is a time series where each data point represents an observation at a certain point in time. There are other examples of sequential data, such as stock prices, and even gene sequences.
+But traditional NNs cannot handle this type of data. This is because regular NNs assume that the data points are independent of each other.
+
+----------------------------------------------------------------------------------------
+The Recurrent Neural Network Model
+
+An RNN is a great tool for modeling sequential data. The RNN has one layer, but it maintains the state, or a context, in order to remember the analysis that it's done up to that point.
+The state "recurs" back into the net with each new input, which is where the net gets its name. Input data first flows into the model's single layer. The data is processed in the same way as a traditional net, but as we mentioned the net also receives the current state or the context along with the input.
+If this is the first data point, then some form of "initial state" is used, which will differ depending on the type of data being analyzed. After processing, the data is output with a new context that represents the most recent point. Then, this context is fed back into the net with the next data point, and so on. We repeat these steps until all the data is processed. Keep in mind that since the context changes at every step, the net can produce a different output for the same input depending on the current state. This is what allows a recurrent net to perform sequential data processing. Recurrent neural networks are extremely versatile and are used in a wide range of applications that deal with sequential data. One of these applications is image captioning:
+Although it's not purely recurrent, Andrej Karpath and Li Fei-Fei created a model that's capable of understanding the elements in an image. The model can assign words to the elements, and string them together to form a caption that describes the scene.
+You can take a look at two examples of that here. Another application for recurrent nets is music composition. A network can be trained using MIDI files, which are a type of standard for digital audio. After learning abouth rhythm and melodic patterns, the net can output data that can be converted back to the MIDI file format, and listened to.
+We only covered a few applications, but variants such as:
+*Recursive Neural Networks.
+*Recursive Neural Tensor Networks.
+*Hopfield Networks.
+*Echo State Networks.
+are continuing to solve increasingly complex problems. You can see a few of those variants here.
+
+Despite all its strengths, the recurrent neural network is not a perfect model. One issue is that the network need to keep track of the states at any given time. There could be many units of data, or many time steps, so this becomes computationally expensive.
+One compromise is to only store a portion of the recent states in a time window. Another issue is that RNNs are extremely sensitive to changes in their parameters. As a result gradient descent optimizers may struggle to train the net.
+As a result, gradient descent optimizers may struggle to train the net. The net may suffer from the "Vanishing Gradient Problem", where the gradient drops to nearly zero and training slows to a halt. It may also suffer from the "Exploding Gradient", where the gradient grows exponentially off to infinity. In either case, the model's capacity to learn will be diminished.
+
+----------------------------------------------------------------------------------------
+Short Long-Term Memory Model
+
+The recurrent neural network is a great tool for modeling sequential data, but there are a few issues that need to be addressed in order to use the model at a large scale. Recurrent nets need to keep track of states, which is computationally expensive.
+There are also issues with training like the vanishing gradient, and the exploding gradient. A popular method to solve these problems is the Long Short-Term memory unit, or LSTM for short. LSTM is an abstraction of computer memory that works in tandem with a recurrent net. It's used to maintain, update, and regulate the states of the network model, outside of its normal execution flow.
+The LSTM units are composed of four main elements:
+*The "memory cell", or "information cell", is responsible for holding data.
+Three logistic "gates", define the flow of data inside the LSTM:
+  *The Write Gate, or the Input Gate, is responsible for writing data into the memory cell.
+  *The Output, or Read, Gate reads data from the information cell and sends that data back to the recurrent network.
+  *And the Keep Gate, or Forget Gate, maintains or deletes data from the information cell.
+These gates have a similar structure to the neurons in a traditional neural network, since they are multiplicative analog sigmoid-activated nodes. By manipulating these gates, a Recurrent Network is able to remember what it needs, and forget what is no longer useful.
+This is what a recurrent network would look like, if we unfolded it at each time step:
+1-The LSTM cells exist between the time steps in the network's flow.
+2-The network's output can be input into the LSTM.
+3-The LSTM can send its output to the net's input in the next time step.
+
+Let's take a closer look at an LSTM unit's structure:
+1-The data input and the network's state are directly connected to all the gates.
+2-Each gate receives the same information as the recurrent net's processing cell.
+3-Additionally, the network's output is connected to the Write gate, and the Read Gate is connected to the network's processing cell.
+4-The Write Gate sends its output to the informacion cell, and the information cell can send data into the Read Gate.
+
+These gates are all analogue logistic units, which means their behavior is defined by a logistic function. For example, a value of 0 in the Keep Gate means "forget everything", a value of 1 means "retain everything", and a value of 0.7 means "keep exactly 70 percent of the current data".
+This applies to all threee of the gates. For now, let's just focus on the individual Gates themselves:
+1-The Keep Gate is responsible for maintaining the data in the information cell. It receives the same input data and state as the network, and then it calculates how much of the current data should be remembered.
+2-The Write Gate is responsible for inputting new data into the memory cell. Like the Keep Gate, it receives the same input data and state as teh recurrent network. However, it also receives the recurent net's output data from the most recent time step. This Gate uses the inputs to determine how much of the output data should be written into the memory cell.
+3-The Read Gate is responsible for sending data from the LSTM back into the Recurrent network. Like the other gates, it receives the inputs and state from the network. The gate reads a value from the information cell, and this value is interpreted as a signal between -1 and 1. The input data and state are then used to determine how much of this signal should be sent to the Recurrent Network.
+
+Working in tandem, all three gates allo the model to freely regulate and manipulate the data inside the information cell. But you might be wondering why the LSTM uses logistic gates. The reason is that logistic-based functions have very nice derivatives. As a result, we can backpropagate through the gates, which enables the recurrent net to understand how to utilize the LSTM structure.
+The main point is that by manipulating values through the gates, we eliminate the vanishing and exploding gradient problems from before.
+And since the gates allow the network to forget the states that are no longer needed, the computational load of the recurrent model decreases drastically.
+
+----------------------------------------------------------------------------------------
+Applying Recurrent Networks to Language Modeling
+
+Language modelling is a gateway into many exciting deep learning applications like such as speech recognition, machine translation, and image captioning. At its simplest, language modelling is the process of assigning probabilities to sequences of words. So, for example, a language model could analyze a sequence of words, and predict which word is most likely to follow.
+So, with the sequence "This is an " which you see here, a language model might predict that the word "example" is most likely to follow, with an 80 percent probability. This boils to a sequential data analysis problem. The sequence of words forms the context, and the most recent word is the input data. Using these two pieces of information, you need to output both a predicted word, and a new context that contains the input word.
+Recurrent neural networks are a great fit for this type of problem. At each step, a recurrent net can receive a word as input and the current sequence of words as the context. After processing, the net can then form a new context and repeat the steps until the sentence is complete.
+The main metric for language modelling is known as Perplexity. Perplexity is a measure of how well the model is able to predict a sample. Keep in mind that a low perplexity rating equates to a larger amount of confidence in the prediction. So, we want our model to have as low of a perplexity rating as possible.
+When it comes to actually training and testing a language model, you'll find that good datasets are hard to come by. Since the data points are words or sentences, the data has to be annotated, or at least validated, by a human. This is time consuming and typically constrains the dataset's size. One of the biggest datasets for language modeling is the Penn Treebank.
+It holds over four million annotated words in many different types of classifications. In order to build such a large dataset, all of the words were first tagged by machines, and then validated and corrected by humans. The data comes from many different sources, from papers published in the Department of Energy, to excerpts from the Library of America.
+As we mentioned, the Penn Treebank is the go-to dataset for language modelling, and natural language processing in general. The Penn Treebank is versatile, but if you're only interested in predicting words rather than meaning or part of speech, then you don't need to use the tags in the dataset. An interesting way to process words is through a structure known as a Word Embedding.
+
+A word embedding is an n-dimensional vector of real numbers. The vector is typically large, with n greater than 100. The vector is also initialized randomly. You can see what that might look like with the example here. During the recurrent network's training, the vector values are updated based on the context that the word is being inserted into.
+So words that are used in similar contexts end up with similar positions in the vector space. This can be visualized by utilizing a dimensionality-reduction algorithm, such as t-SNE.
+Words are grouped together either because they're synonyms, or they're used in similar places within a sentence. So, for example, the words "zero" and "none" are close semantically, so it's natural for them to be close together. On the other hand, the words hockey and Jamaica are far away, since they are not close nor used together.
+
+----------------------------------------------------------------------------------------
+Restricted Boltzmann Machines
+
+This module is about:
+*The applications of Unsupervised Learning.
+*Restricted Boltzmann Machine.
+*Training a Restricted Boltzmann Machine.
+*Recommendation System with a Restricted Boltzmann Machine.
+
+----------------------------------------------------------------------------------------
+Introduction to unsupervised learning
+
+This type of learning is good for tasks such as:
+
+*Pattern Recognition.
+*Data Clustering.
+*Object Recognition.
+*Feature Extraction.
+*Data Dimensionality Reduction.
+
+There are several techniques to choose from:
+
+*Restricted Boltzmann Machines (RBM).
+*Autoencoders
+*Self-Organizing Maps.
+*Principal Component Analysis.
+*K-Means Clustering.
+
+----------------------------------------------------------------------------------------
+RBMs and Autoencoders
+
+RBMs are neural networks that only have two layers. They are used to find patterns in data by reconstructing the input.
+The net is restricted, because no two neurons from the same layer are connected. RBMs are good for:
+*Dimensionality Reduction.
+*Feature Extraction.
+*Collaborative Filtering.
+
+After being trained, an RBM can reconstruct the input that was given. The training process has three steps:
+1-Forward pass: The image is combined with an individual weight and an overall bias. The result goes to the hidden layer,
+whose neurons may or may not activate.
+2-Backward Pass: The hidden layer sends back the outputs to the input layer, where it is weighted and biased.
+3-Quality Assessment: The input and the forwarded output are compared to see how much they differ. The weights and biases
+are then adjusted to minimize the error.
+
+Advantages of RBMs:
+1-RBMs are good at handling unlabeled data.
+2-RBMs extract important features from the data.
+3-RBMs are more efficient at dimensionality reduction than PCA.
+
+As RBMs learn data, they actually create their own structure. Therefore they are classified as Autoencoders.
+Autoencoders are used for tasks that involve:
+*Feature Extraction.
+*Data Compression.
+*Dimensionality Reduction.
+*Learning generative models of data.
+
+Structure: Autoencoders are mostly shallow networks, that include an input layer, a couple hidden layers and an output
+layer. Autoencoders use backpropagation as their learning process. The metric used is loss (instead of cost).
+
+In the lab we saw how to use an RBM to reconstruct the NIST data set, and how to use an RBM to recommend a movie. I should
+review these more closely when wanting to create an application of my own.
+
+----------------------------------------------------------------------------------------
+Autoencoders
+
+This module is about:
+
+*Introduction to autoencoders and applications
+*Autoencoder structure
+*Autoencoders
+*Deep Belief Networks.
+
+----------------------------------------------------------------------------------------
+What are autoencoders?
+
+An autoencoder is also knownas an autoassociator or a Diabolo Network. It is a NN that is designed to recreate the given
+input. They differ from RBMs in that they use a deterministic approach, rather than an stochastic approach.
+For example, they could detect in a picture the features that make up a face.
+Tasks in which Autoencoders excel are:
+*Emotion Detection.
+*Image reconstruction.
+*Dimensionality reduction.
+*Compression.
+
+High dimensional data is a big problem for machine learning tasks. It is called the "Curse of Dimensionality".
+The formula for determining the time to fit is
+m^(-p/(2p+d))
+Where m is the number of data points, d is the dimensionality of the dataset, and p is the parameter that depends on the
+model.
+That means that dimensionality makes the model fit time to increase exponentially. If we have a large number of dimensions
+our data will start to get sparse, which results in over-allocation of memory. Overlap and sparsity make it difficult to
+determine the underlying patterns.
+So, autoencoders can extract key image features, improve training times of other networks, and improve the separability of
+reduced datasets when compared to other methods.
+
+----------------------------------------------------------------------------------------
+Autoencoder Structure
+
+Let's say you want to extract the emotion of a person given a photograph. The autoencoder is split into two parts: the
+encoder and the decoder.
+The encoder compresses the representation of an input. In our case, the application will reduce the number of dimensions
+from 2000 to just 30.
+The decoder recreates the input as accurately as it can, keeping only the most important features.
+Once the application is dimensionally reduced, it can be put as an input for other applications.
+
+An autoencoder uses a loss function, and then gradient descent to reach a minimum. You can use different functions for 
+binary and real values.
+
+----------------------------------------------------------------------------------------
+Deep Belief Networks
+
+One problem with back-propagation is that it can lead to local minima using gradient descent.
+A Deep Belief Network (DBN) solves this, by containing an extra step, called pre-training. Pre-training is performed before
+the backprop is executed, leading to an error that is in the vicinity of the final solution.
+
+DBNs are structured in two parts:
+-The first contains multiple layers of RBMs in order to pre-train our network. The second is a feed-forward backprop
+network, which will further refine the results from the RBN stack.
+
+1-You define a class to instantiate the RBMs.
+2-Determine the number of RBMs to use, and how many hidden units should each RBM have.
+3-With this, you are generating a deep heirarchical representation of the training data.
+4-Train these RBMs, which are the pre-training step of the whole algorithm.
+5-Convert the learned representation of the input data into a prediction, which will be a linear classifier.
+6-Use the output of the last hidden layer to classify the input using a shallow neural network.

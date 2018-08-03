@@ -1,0 +1,70 @@
+LTSM lab notes:
+
+RNNs have a fundamental problem: they are computationally very expensive when it comes to maintaining the state of a large amount of units, even more so over a long amount of time. Additionally, Recurrent Networks are very sensitive to changes in their parameters. As such, they are prone to different problems with their Gradient Descent Optimizer - they either grow exponentially or drop down to near zero and stabilize - problems that greatly harm a model's learning capability. This problem is solved by means of the Long Short-Term Memory model.
+
+In 1997 hochreiter and Schmidhuber published a paper in 1997 describing a way to keep information over long periods of time and additionally solve the oversensitivity to parameter changes. In essence, to make backpropagating through RNNs more viable. The LSTM, as it was called, was an abstraction of how computer memory works. It is bundled with whatever processing unit is implemented in the RNN although outside of its flow, and is responsible for keeping, reading and outputting information for the model.
+The way it works is simple: you have a linear unit, which is the information cell itself, surrounded by three logistic gates responsible for maintaining the data. One gate is for inputting data into the information cell, one is for outputting data from the input cell, and the last one is to keep or forget data depending on the needs of the network.
+Thanks to that, it not only solves the problem of keeping states, because the network can choose to forget data whenever information is not needed, it also solves the gradient problems, since the Logistic Gates have a very nice derivative.
+The usual flow of operations for the LSTM unit is as such:
+1-The keep Gate has to decide whether to keep or forget the data currently stored in memory. This is done by reading both the input and the state of the Recurrent Network, and passes it through its Sigmoid activation. A value of 1 means that the LSTM unit should keep the data stored perfectly and a value of 0 means that it should forget it entirely.
+So:
+*Wk and Bk are the weight and bias of the Keep Gate.
+*St-1 is the previous state of the LSTM.
+*Xt is the incoming input from the RNN.
+*Oldt-1 is the data inside the information cell.
+Then do Kt = Sigma(Wk x [St-1,Xt] + Bk)
+Finally do Oldt = Kt x Oldt-1
+-Store Oldt.
+
+2-Pass the input and the state to the Input Gate. Concurrently, the input is processed as normal by whatever processing unit is implemented in the network, and then multiplied by the Sigmoid activation resul, much like the Keep Gate.
+Consider Wi and Bi as the weight and bias for the Input Gate and Ct the result of the processing of the inputs by the Recurrent Network.
+
+It = Sigma(Wi x [St-1,xt] + Bi)
+Newt = It x Ct
+*Store the value into the information cell:
+Cellt = Oldt + Newt
+
+3-We now have the candidate data which is to be kept in the memory cell. The conjunction of the Keep and Input gates work in an analog manner, such that you can keep part of the old data and add only part of the new data. Consider however, what would happen if the Forget Gate was set to 0 and the Input Gate was set to 1:
+
+Oldt = 0 x Oldt-1
+Newt = 1 x Ct
+Cellt = Ct
+
+The old data would be totally forgotten and the new data would overwrite it completely.
+
+4-The Output Gate functions in a similar manner. To decide what we should output, we take the input data and state and pass it through a Sigmoid function as usual. The contents of our memory cell, however, are pushed onto a Tanh function to bind them between a value of -1 to 1. Consider Wo and Bo as the wieght and bias for the Output Gate:
+
+Ot = Sigma(Wo x [St-1,xt] + Bo)
+Outputt = Ot x tanh(Cellt)
+
+And that Output is what is output into the Recurrent Network.
+As mentioned many times, all three gates are logistic. The reason for this is because it is very easy to backpropagate through them, and as such, it is possible for the model to learn exactly how it is supposed to use this structure. This is one of the reasons for which LSTM is a very strong structure. Additionally, this solves the gradient problems by being able to manipulate values through the gates themselves - by passing the inputs and outputs through the gates, we have now a easily derivavble function modifying our inputs.
+In regards to the problem of storing many states over a long period of time, LSTM handles this perfectly by only keeping whatever information is necessary and forgetting it whenever it is not needed anymore. Therefore, LSTMs are a very ellegant solution to both problems.
+
+More notes from LSTM. This time with the MNIST:
+
+Recurrent Neural Networks and Deep Learning models with simple structures and a feedback mechanism built-in, or in different words, the output of a layer is added to the next input and fed back to the same layer.
+The RNN is a specialized type of NN that solves the issue of maintaining context for sequential data - such as weather data, stocks, genes, etc. At each iterative step, the processing unit takes in an input and the current state of the network, and produces an output and a new state that is re-fed into the network.
+
+However, this model has some problems. It's very computationally expensive to maintain the state for a large amount of units, even more so over a long amount of time. Additionally, RNNs are very sensitive to changes in parameters. As such, they are prone to different problems with their Gradient Descent Optimizer - they either grow exponentially or drop down to near zero and stabilize - problems that greatly harm a model's learning capability.
+To solve these problems, LSTMs were invented to keep information over long periods of time and additionally solve the oversensitivity to parameter changes, i.e. make backpropagating through the RNN more viable.
+LSTM is an abstraction of how computer memory works. It is "bundled" with whatever processing unit is implemented in the RNN, although outside of its flow, and is responsible for keeping, reading, and outputting information for the model. The way it works is simple: you have a linear unit, which is the information cell itself, surrounded by three logistic gates responsible for maintaining the data.
+*The Input Gate puts info into the information cell.
+*The Output Gate takes info from the information cell.
+*The Keep Gate determines whether the information should save its next value or drop it.
+
+The three of them implement some form of sigmoid. This is because this function has a nice derivative.
+
+RNNs for classification:
+Although RNNs are mostly used to model sequences and predict sequential data, we can still classify images using a LSTM network. If we consider every image row as a sequence of pixels, we can feed a LSTM network for classification. Lets use the famous MNIST dataset here. Because MNIST image shape is 28*28px, we will then handle 28 sequences of 28 steps for every sample.
+
+RNNs for language processing:
+We can now go over the topic of what Language Modelling is and create a RNN model based on the Long Short-Term Memory unit to train and be benchmarked by the Penn Treebank. You should be able to understand how TensorFlow builds and executes a RNN model for Language Processing.
+
+RNNs are used for a task called Language Modelling. This is the cornerstone of many different linguistic problems such as Speech Recognition, Machine Translation and Image Captioning. One way to train this tools is by using the Penn Treebank, an often-used dataset for benchmarking Language Modelling models.
+
+What is language Modelling:
+Is the task of assigning probabilities to sequences of words. This mensa that, given a context of one or a few words in the language the model was trained on, the model should have a knowledge of what are the most probable words or sequence of words for the sentence. Language Modelling is one of the tasks under Natural Language Processing, and one of the most important.
+Let's say you want to find the next word in a sentence. This is crucial in things such as Speech Recognition, Machine Translation, Image Captioning, Text Correction and many other very relevant problems.
+
+The goal of our program is to create a script that reaches low levels of perplexity on the desired dataset. Perplexity is the way to gauge efficiency. Perplexity is simple a measure of how well a probabilistic model is able to predict its sample. A higher-level way to explain this would be saying that low perplexity means a higher degree of trust in the predictions the model makes. Therefore, the lower perplexity is, the better.
